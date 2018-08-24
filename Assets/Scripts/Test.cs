@@ -11,9 +11,19 @@ namespace Numba.Await
 	{
 		private async void Awake()
 		{
-            await new WaitWhile(() => { return false; });
+            await MyEnumerator();
 
             Log("Awaited!");
 		}
-	}
+
+        private IEnumerator MyEnumerator()
+        {
+            yield return new WaitForSeconds(1f);
+            yield return 0;
+            yield return 1;
+            yield return 2;
+            yield return 3;
+            yield return 4;
+        }
+    }
 }
