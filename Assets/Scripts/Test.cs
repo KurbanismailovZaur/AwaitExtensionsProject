@@ -11,7 +11,7 @@ namespace Numba.Await
 	{
 		private async void Awake()
 		{
-            await new WaitForSeconds(1f);
+            await new WaitWhile(() => { return false; });
 
             Log("Awaited!");
 		}
