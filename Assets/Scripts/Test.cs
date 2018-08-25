@@ -4,33 +4,23 @@ using UnityEngine;
 using System.Threading.Tasks;
 using static UnityEngine.Debug;
 using System.Threading;
+using UnityEngine.SceneManagement;
 
-namespace Numba.Await
+namespace Numba
 {
 	public class Test : MonoBehaviour 
 	{
 		private async void Awake()
 		{
-            await new WaitForSeconds(1f);
 
-            Log($"Main Thread: {Thread.CurrentThread.ManagedThreadId}");
-
-            await new WaitForBackgroundThread();
-
-            Log($"Background Thread {Thread.CurrentThread.ManagedThreadId}");
-
-            await new WaitForUpdate();
-
-            Log($"Main Thread: {Thread.CurrentThread.ManagedThreadId}");
-
-            await new WaitForBackgroundThread();
-
-            Log($"Background Thread {Thread.CurrentThread.ManagedThreadId}");
+            await MyEnum();
+            Log("Awaited!");
         }
 
-        private void Update()
+        private IEnumerator MyEnum()
         {
-            Log("Update");
+            yield return new WaitForSeconds(1f);
+            yield return 1;
         }
     }
 }

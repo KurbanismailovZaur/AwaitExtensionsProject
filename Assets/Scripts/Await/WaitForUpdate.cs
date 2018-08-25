@@ -31,10 +31,6 @@ public class WaitForUpdate
             continuation();
         }
     }
-    
 
-    public Awaiter GetAwaiter()
-    {
-        return new Awaiter();
-    }
+    public Awaiter GetAwaiter() => new Awaiter();
 }
