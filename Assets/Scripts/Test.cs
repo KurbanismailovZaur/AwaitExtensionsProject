@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using static UnityEngine.Debug;
-using Numba.Await.Extensions;
+using System.Threading;
 
 namespace Numba.Await
 {
@@ -11,19 +11,35 @@ namespace Numba.Await
 	{
 		private async void Awake()
 		{
-            await MyEnumerator();
+            Log($"Main Thread: {Thread.CurrentThread.ManagedThreadId}");
 
-            Log("Awaited!");
-		}
+            await new WaitForBackgroundThread();
 
-        private IEnumerator MyEnumerator()
-        {
-            yield return new WaitForSeconds(1f);
-            yield return 0;
-            yield return 1;
-            yield return 2;
-            yield return 3;
-            yield return 4;
+            Log($"Background Thread {Thread.CurrentThread.ManagedThreadId}");
+
+            await new WaitForUpdate();
+
+            Log($"Main Thread: {Thread.CurrentThread.ManagedThreadId}");
+
+            await new WaitForBackgroundThread();
+
+            Log($"Background Thread {Thread.CurrentThread.ManagedThreadId}");
+
+            await new WaitForUpdate();
+
+            Log($"Main Thread: {Thread.CurrentThread.ManagedThreadId}");
+
+            await new WaitForBackgroundThread();
+
+            Log($"Background Thread {Thread.CurrentThread.ManagedThreadId}");
+
+            await new WaitForUpdate();
+
+            Log($"Main Thread: {Thread.CurrentThread.ManagedThreadId}");
+
+            await new WaitForBackgroundThread();
+
+            Log($"Background Thread {Thread.CurrentThread.ManagedThreadId}");
         }
     }
 }

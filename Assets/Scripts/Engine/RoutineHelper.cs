@@ -20,7 +20,5 @@ namespace Numba.Await.Engine
             gameObject.hideFlags = HideFlags.HideInHierarchy;
             DontDestroyOnLoad(this);
         }
-
-
     }
 }
