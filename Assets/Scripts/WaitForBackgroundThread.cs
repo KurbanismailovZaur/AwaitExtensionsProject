@@ -11,17 +11,5 @@ using System;
 /// </summary>
 public class WaitForBackgroundThread
 {
-    public struct Awaiter : INotifyCompletion
-    {
-        public bool IsCompleted => false;
-
-        public void OnCompleted(Action continuation) => Task.Run(continuation).ConfigureAwait(false);
-
-        public void GetResult() { }
-    }
-
-    public Awaiter GetAwaiter()
-    {
-        return new Awaiter();
-    }
+    public ConfiguredTaskAwaitable.ConfiguredTaskAwaiter GetAwaiter() => Task.Run(() => { }).ConfigureAwait(false).GetAwaiter();
 }

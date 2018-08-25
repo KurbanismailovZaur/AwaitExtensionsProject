@@ -11,13 +11,7 @@ namespace Numba.Await
 	{
 		private async void Awake()
 		{
-            Log($"Main Thread: {Thread.CurrentThread.ManagedThreadId}");
-
-            await new WaitForBackgroundThread();
-
-            Log($"Background Thread {Thread.CurrentThread.ManagedThreadId}");
-
-            await new WaitForUpdate();
+            await new WaitForSeconds(1f);
 
             Log($"Main Thread: {Thread.CurrentThread.ManagedThreadId}");
 
@@ -32,14 +26,11 @@ namespace Numba.Await
             await new WaitForBackgroundThread();
 
             Log($"Background Thread {Thread.CurrentThread.ManagedThreadId}");
+        }
 
-            await new WaitForUpdate();
-
-            Log($"Main Thread: {Thread.CurrentThread.ManagedThreadId}");
-
-            await new WaitForBackgroundThread();
-
-            Log($"Background Thread {Thread.CurrentThread.ManagedThreadId}");
+        private void Update()
+        {
+            Log("Update");
         }
     }
 }

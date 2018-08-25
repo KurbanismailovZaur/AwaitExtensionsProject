@@ -8,17 +8,29 @@ namespace Numba.Await.Engine
 {
     /// <summary>
     /// Help run coroutines. 
-    /// Do not visible in hierarchy.
+    /// Auto created, not destroyable and not visible in hierarchy.
     /// </summary>
-    public class RoutineHelper : MonoSingleton<RoutineHelper>
+    public class RoutineHelper : MonoBehaviour
     {
+        public static RoutineHelper Instance { get; private set; }
+
         /// <summary>
-        /// Make this gameobject undestroyable and hided in hierarchy.
+        /// Create and save one instance of this class (singleton pattern).
+        /// Created object will not be visible in hierarchy and do not destroyed between scenes.
         /// </summary>
-        private void Awake()
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void CreateInstance()
         {
-            gameObject.hideFlags = HideFlags.HideInHierarchy;
-            DontDestroyOnLoad(this);
+            Instance = new GameObject("RoutineHelper").AddComponent<RoutineHelper>();
+            Instance.gameObject.hideFlags = HideFlags.HideInHierarchy;
+
+            DontDestroyOnLoad(Instance.gameObject);
+        }
+
+        public new void StartCoroutine(IEnumerator enumerator)
+        {
+            if (ContextHelper.IsMainThread) base.StartCoroutine(enumerator);
+            else ContextHelper.UnitySynchronizationContext.Post(s => base.StartCoroutine(enumerator), null);
         }
     }
 }

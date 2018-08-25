@@ -9,7 +9,7 @@ using System.Threading;
 using Numba.Await.Engine;
 
 /// <summary>
-/// This class allows run code after awaiting in main thread.
+/// This class allows run code after awaiting in update cycle from main thread.
 /// </summary>
 public class WaitForUpdate
 {
@@ -17,14 +17,21 @@ public class WaitForUpdate
     {
         public bool IsCompleted => false;
 
-        public async void OnCompleted(Action continuation)
+        public void OnCompleted(Action continuation)
         {
-            if (SynchronizationContext.Current == ContextHelper.UnitySynchronizationContext) continuation();
+            if (SynchronizationContext.Current == ContextHelper.UnitySynchronizationContext) RoutineHelper.Instance.StartCoroutine(WaitOneFrameAndContinueRoutine(continuation));
             else ContextHelper.UnitySynchronizationContext.Post(s => continuation(), null);
         }
 
         public void GetResult() { }
+
+        private IEnumerator WaitOneFrameAndContinueRoutine(Action continuation)
+        {
+            yield return null;
+            continuation();
+        }
     }
+    
 
     public Awaiter GetAwaiter()
     {
