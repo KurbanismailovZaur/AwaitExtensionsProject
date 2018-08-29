@@ -6,7 +6,7 @@ using static UnityEngine.Debug;
 using System.Runtime.CompilerServices;
 using System;
 using System.Threading;
-using Numba.Await.Engine;
+using Numba.Awaiting.Engine;
 
 /// <summary>
 /// This class allows run code after awaiting in update cycle from main thread.

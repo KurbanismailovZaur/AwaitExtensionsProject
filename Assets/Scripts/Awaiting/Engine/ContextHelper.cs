@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using static UnityEngine.Debug;
 using System.Threading;
 
-namespace Numba.Await.Engine
+namespace Numba.Awaiting.Engine
 {
     /// <summary>
     /// This class capture UnitySynchronizationContext and main thread ID before scene loads and allows you access to it.

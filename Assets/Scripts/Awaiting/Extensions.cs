@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using static UnityEngine.Debug;
 using System.Runtime.CompilerServices;
-using Numba.Await.Engine;
+using Numba.Awaiting.Engine;
 
 public static class Extensions
 {

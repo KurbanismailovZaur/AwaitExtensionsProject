@@ -5,22 +5,29 @@ using System.Threading.Tasks;
 using static UnityEngine.Debug;
 using System.Threading;
 using UnityEngine.SceneManagement;
+using System;
+using Numba.Tweening;
 
 namespace Numba
 {
-	public class Test : MonoBehaviour 
-	{
-		private async void Awake()
-		{
+    public class Test : MonoBehaviour
+    {
+        public Transform _cube;
 
-            await MyEnum();
-            Log("Awaited!");
-        }
+        public float xPos;
 
-        private IEnumerator MyEnum()
+        public float duration;
+
+        public Ease ease;
+
+        private async void Awake()
         {
-            yield return new WaitForSeconds(1f);
-            yield return 1;
+            Tween xPosTween = new Tween(0f, xPos, duration, (x) => { _cube.position = new Vector3(x, 0f, 0f); }).SetEase(ease);
+            Tween yPosTween = new Tween(0f, xPos, duration, (y) => { _cube.position = new Vector3(0f, y, 0f); }).SetEase(ease);
+            Tween zPosTween = new Tween(0f, xPos, duration, (z) => { _cube.position = new Vector3(0f, 0f, z); }).SetEase(ease);
+
+            Sequence sequence = new Sequence(xPosTween, yPosTween, zPosTween);
+            await sequence.PlayAsync();
         }
     }
 }

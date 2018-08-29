@@ -6,7 +6,7 @@ using static UnityEngine.Debug;
 using System.Runtime.CompilerServices;
 using System;
 
-namespace Numba.Await.Engine
+namespace Numba.Awaiting.Engine
 {
     /// <summary>
     /// Helps create awaiters for awaitable objects.

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using static UnityEngine.Debug;
 
-namespace Numba.Await.Engine
+namespace Numba.Awaiting.Engine
 {
     /// <summary>
     /// Help run coroutines. 
