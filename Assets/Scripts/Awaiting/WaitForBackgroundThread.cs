@@ -11,5 +11,11 @@ using System;
 /// </summary>
 public class WaitForBackgroundThread
 {
-    public ConfiguredTaskAwaitable.ConfiguredTaskAwaiter GetAwaiter() => Task.Run(() => { }).ConfigureAwait(false).GetAwaiter();
+    public ConfiguredTaskAwaitable.ConfiguredTaskAwaiter GetAwaiter()
+    {
+        var task = new Task(() => { });
+        task.Start();
+
+        return task.ConfigureAwait(false).GetAwaiter();
+    }
 }

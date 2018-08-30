@@ -27,10 +27,10 @@ namespace Numba.Awaiting.Engine
             DontDestroyOnLoad(Instance.gameObject);
         }
 
-        public new void StartCoroutine(IEnumerator enumerator)
-        {
-            if (ContextHelper.IsMainThread) base.StartCoroutine(enumerator);
-            else ContextHelper.UnitySynchronizationContext.Post(s => base.StartCoroutine(enumerator), null);
-        }
+        //public new void StartCoroutine(IEnumerator enumerator)
+        //{
+        //    if (ContextHelper.IsMainThread) base.StartCoroutine(enumerator);
+        //    else ContextHelper.UnitySynchronizationContext.Post(s => base.StartCoroutine(enumerator), null);
+        //}
     }
 }

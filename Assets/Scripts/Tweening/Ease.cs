@@ -23,7 +23,7 @@ namespace Numba.Tweening
         QuintInOut,
         SineIn,
         SineOut,
-        SineinOut,
+        SineInOut,
         ExpoIn,
         ExpoOut,
         ExpoInOut,

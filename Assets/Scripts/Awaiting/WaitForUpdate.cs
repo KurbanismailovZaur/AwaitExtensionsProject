@@ -13,24 +13,19 @@ using Numba.Awaiting.Engine;
 /// </summary>
 public class WaitForUpdate
 {
-    public struct Awaiter : INotifyCompletion
+    public TurnableAwaiter GetAwaiter()
     {
-        public bool IsCompleted => false;
+        TurnableAwaiter awaiter = new TurnableAwaiter();
 
-        public void OnCompleted(Action continuation)
-        {
-            if (SynchronizationContext.Current == ContextHelper.UnitySynchronizationContext) RoutineHelper.Instance.StartCoroutine(WaitOneFrameAndContinueRoutine(continuation));
-            else ContextHelper.UnitySynchronizationContext.Post(s => continuation(), null);
-        }
+        if (ContextHelper.IsMainThread) RoutineHelper.Instance.StartCoroutine(WaitOneFrameAndRunContinuationRoutine(awaiter));
+        else ContextHelper.UnitySynchronizationContext.Post((state)=> { awaiter.RunContinuation(); }, null);
 
-        public void GetResult() { }
-
-        private IEnumerator WaitOneFrameAndContinueRoutine(Action continuation)
-        {
-            yield return null;
-            continuation();
-        }
+        return awaiter;
     }
 
-    public Awaiter GetAwaiter() => new Awaiter();
+    private IEnumerator WaitOneFrameAndRunContinuationRoutine(TurnableAwaiter awaiter)
+    {
+        yield return null;
+        awaiter.RunContinuation();
+    }
 }

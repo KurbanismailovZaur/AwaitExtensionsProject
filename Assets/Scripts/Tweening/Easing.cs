@@ -28,7 +28,7 @@ namespace Numba.Tweening
                 case Tweening.Ease.QuintInOut: return QuinticInOutEase(from, changeInValue, passedTime, duration);
                 case Tweening.Ease.SineIn: return SinusoidalInEase(from, changeInValue, passedTime, duration);
                 case Tweening.Ease.SineOut: return SinusoidalOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.SineinOut: return SinusoidalInOutEase(from, changeInValue, passedTime, duration);
+                case Tweening.Ease.SineInOut: return SinusoidalInOutEase(from, changeInValue, passedTime, duration);
                 case Tweening.Ease.ExpoIn: return ExponentialInEase(from, changeInValue, passedTime, duration);
                 case Tweening.Ease.ExpoOut: return ExponentialOutEase(from, changeInValue, passedTime, duration);
                 case Tweening.Ease.ExpoInOut: return ExponentialInOutEase(from, changeInValue, passedTime, duration);
