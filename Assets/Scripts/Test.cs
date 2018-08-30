@@ -22,7 +22,11 @@ namespace Numba
 
         private async void Awake()
         {
-            await new WaitForBackgroundThread();
+            await new WWW("google.ru");
+
+            Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
+
+            await Routine();
 
             Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
 
@@ -53,8 +57,13 @@ namespace Numba
         {
             await Task.Delay(1000).ConfigureAwait(false);
             Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
-            await new WaitForUpdate();
+            await new WaitForEndOfFrame();
             Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
+        }
+
+        private IEnumerator Routine()
+        {
+            yield return new WaitForSeconds(1f);
         }
     }
 }

@@ -13,9 +13,9 @@ using Numba.Awaiting.Engine;
 /// </summary>
 public class WaitForUpdate
 {
-    public TurnableAwaiter GetAwaiter()
+    public ManualAwaiter GetAwaiter()
     {
-        TurnableAwaiter awaiter = new TurnableAwaiter();
+        ManualAwaiter awaiter = new ManualAwaiter();
 
         if (ContextHelper.IsMainThread) RoutineHelper.Instance.StartCoroutine(WaitOneFrameAndRunContinuationRoutine(awaiter));
         else ContextHelper.UnitySynchronizationContext.Post((state)=> { awaiter.RunContinuation(); }, null);
@@ -23,7 +23,7 @@ public class WaitForUpdate
         return awaiter;
     }
 
-    private IEnumerator WaitOneFrameAndRunContinuationRoutine(TurnableAwaiter awaiter)
+    private IEnumerator WaitOneFrameAndRunContinuationRoutine(ManualAwaiter awaiter)
     {
         yield return null;
         awaiter.RunContinuation();

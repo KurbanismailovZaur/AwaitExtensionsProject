@@ -8,9 +8,9 @@ using System;
 
 namespace Numba.Awaiting.Engine
 {
-    public class TurnableAwaiter : INotifyCompletion
+    public class ManualAwaiter : INotifyCompletion
     {
-        private Action _continuation;
+        protected Action _continuation;
 
         public bool IsCompleted => false;
 
@@ -19,5 +19,17 @@ namespace Numba.Awaiting.Engine
         public void GetResult() { }
 
         public void RunContinuation() { _continuation(); }
+    }
+
+    public class ManualAwaiter<T> : ManualAwaiter
+    {
+        private Func<T> _resultGetter;
+
+        public new void GetResult() => _resultGetter();
+
+        public void SetResultGetter(Func<T> resultGetter)
+        {
+            _resultGetter = resultGetter;
+        }
     }
 }
