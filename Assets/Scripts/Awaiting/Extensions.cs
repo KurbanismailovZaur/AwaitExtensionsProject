@@ -16,7 +16,7 @@ public static class Extensions
 
     public static ManualAwaiter<WWW> GetAwaiter(this WWW www) => ExtensionsHelper.GetAwaiterWithResultForInstuction(www);
 
-    //public static TaskAwaiter<AssetBundleRequest> GetAwaiter(this AssetBundleRequest request) => ExtensionsHelper.GetAwaiterForInstuctionAsResult(request);
+    public static ManualAwaiter<AssetBundleRequest> GetAwaiter(this AssetBundleRequest request) => ExtensionsHelper.GetAwaiterWithResultForInstuction(request);
 
     public static async void CatchErrors(this Task task) => await task;
 }

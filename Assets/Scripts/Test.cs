@@ -22,11 +22,11 @@ namespace Numba
 
         private async void Awake()
         {
-            await new WWW("google.ru");
+            //await new WaitForBackgroundThread();
 
             Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
 
-            await Routine();
+            Log((await new WWW("google.ru")).text);
 
             Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
 

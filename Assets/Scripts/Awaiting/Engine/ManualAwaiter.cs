@@ -25,7 +25,7 @@ namespace Numba.Awaiting.Engine
     {
         private Func<T> _resultGetter;
 
-        public new void GetResult() => _resultGetter();
+        public new T GetResult() => _resultGetter();
 
         public void SetResultGetter(Func<T> resultGetter)
         {

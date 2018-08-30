@@ -65,8 +65,7 @@ namespace Numba.Awaiting.Engine
             ManualAwaiter<T> awaiter = new ManualAwaiter<T>();
             awaiter.SetResultGetter(() => instruction);
 
-            if (ContextHelper.IsMainThread) RoutineHelper.Instance.StartCoroutine(WaitForInstructionAndRunContinuation(instruction, awaiter));
-            else ContextHelper.UnitySynchronizationContext.Post((state) => { RoutineHelper.Instance.StartCoroutine(WaitForInstructionAndRunContinuation(instruction, awaiter)); }, null);
+            RoutineHelper.Instance.StartCoroutine(WaitForInstructionAndRunContinuation(instruction, awaiter));
 
             return awaiter;
         }
