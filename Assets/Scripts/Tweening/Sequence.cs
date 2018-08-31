@@ -40,7 +40,7 @@ namespace Numba.Tweening
             }
         }
 
-        private struct FilteredTweensAndCallbacks
+        private struct SortedTweensAndCallbacks
         {
             public List<TweenData> StartedTweens { get; set; }
 
@@ -50,7 +50,7 @@ namespace Numba.Tweening
 
             public List<CallbackData> CompletedCallbacks { get; set; }
 
-            public FilteredTweensAndCallbacks(List<TweenData> startedTweens, List<TweenData> continuousTweens, List<TweenData> completedTweens, List<CallbackData> completedCallbacks)
+            public SortedTweensAndCallbacks(List<TweenData> startedTweens, List<TweenData> continuousTweens, List<TweenData> completedTweens, List<CallbackData> completedCallbacks)
             {
                 StartedTweens = startedTweens;
                 ContinuousTweens = continuousTweens;
@@ -72,6 +72,8 @@ namespace Numba.Tweening
         private TaskCompletionSource<object> _taskSource;
 
         private Dictionary<Tween, float> _tweenDurations = new Dictionary<Tween, float>();
+
+        private int _loopsCount = 1;
         #endregion
 
         #region Constructors
@@ -110,9 +112,11 @@ namespace Numba.Tweening
         #region Properties
         public string Name { get; private set; }
 
-        public int LoopsCount { get; set; } = 1;
-
-        public LoopType LoopType { get; set; }
+        public int LoopsCount
+        {
+            get { return _loopsCount; }
+            set { _loopsCount = Max(value, -1); }
+        }
         #endregion
 
         #region Methods
@@ -152,6 +156,12 @@ namespace Numba.Tweening
 
         private float GetTweenDuration(Tween tween) => _tweenDurations[tween];
 
+        public Sequence SetLoopsCount(int loopsCount)
+        {
+            LoopsCount = loopsCount;
+            return this;
+        }
+
         public Task PlayAsync()
         {
             if (_isPlaying)
@@ -160,51 +170,61 @@ namespace Numba.Tweening
                 return _taskSource.Task;
             }
 
-            _isPlaying = true;
-            _taskSource = new TaskCompletionSource<object>();
-
-            PlayTimeAsync().CatchErrors();
+            PlayTimeAsync(LoopsCount).CatchErrors();
 
             return _taskSource.Task;
         }
 
-        private async Task PlayTimeAsync()
+        private async Task PlayTimeAsync(int loopsCount)
         {
-            #region Catching class data for prevent changing
-            int loopsCount = LoopsCount;
-            LoopType loopType = LoopType;
-            #endregion
+            _isPlaying = true;
+            _taskSource = new TaskCompletionSource<object>();
 
-            float startTime = Time.time;
-            float endTime = startTime + _endTime;
-            float previousTime = -1f;
+            float startTime = 0f;
+            float previousTime = 0f;
+            float endTime = 0f;
+            float timePassed = 0f;
 
-            while (Time.time < endTime)
+            while (loopsCount != 0)
             {
-                float timePassed = Time.time - startTime;
+                startTime = Time.time;
+                endTime = startTime + _endTime;
+                previousTime = -1f;
 
-                FilteredTweensAndCallbacks filteredTweensAndCallbacks = FindTweensAndCallbacksBetween(previousTime, timePassed);
+                while (Time.time < endTime)
+                {
+                    timePassed = Time.time - startTime;
+                    UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
 
-                foreach (var tweenData in filteredTweensAndCallbacks.StartedTweens)
-                    tweenData.Tween.Tweak.SetTime((timePassed - tweenData.StartTime) / GetTweenDuration(tweenData.Tween), tweenData.Tween.Ease);
+                    previousTime = timePassed;
+                    await new WaitForUpdate();
+                }
 
-                foreach (var tweenData in filteredTweensAndCallbacks.ContinuousTweens)
-                    tweenData.Tween.Tweak.SetTime((timePassed - tweenData.StartTime) / GetTweenDuration(tweenData.Tween), tweenData.Tween.Ease);
-
-                foreach (var tweenData in filteredTweensAndCallbacks.CompletedTweens)
-                    tweenData.Tween.Tweak.SetTime(1f, tweenData.Tween.Ease);
-
-                foreach (var callbackData in filteredTweensAndCallbacks.CompletedCallbacks) callbackData.Callback();
-
-                previousTime = timePassed;
-                await new WaitForUpdate();
+                if (loopsCount != -1) --loopsCount;
             }
+
+            timePassed = endTime - startTime;
+            UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
 
             _isPlaying = false;
             _taskSource.SetResult(null);
         }
 
-        private FilteredTweensAndCallbacks FindTweensAndCallbacksBetween(float startTime, float endTime)
+        private void UpdateTweensAndCallbacks(SortedTweensAndCallbacks sortedTweensAndCallbacks, float timePassed)
+        {
+            foreach (var tweenData in sortedTweensAndCallbacks.StartedTweens)
+                tweenData.Tween.SetTime((timePassed - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
+
+            foreach (var tweenData in sortedTweensAndCallbacks.ContinuousTweens)
+                tweenData.Tween.SetTime((timePassed - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
+
+            foreach (var tweenData in sortedTweensAndCallbacks.CompletedTweens)
+                tweenData.Tween.SetTime(1f);
+
+            foreach (var callbackData in sortedTweensAndCallbacks.CompletedCallbacks) callbackData.Callback();
+        }
+
+        private SortedTweensAndCallbacks FindTweensAndCallbacksBetween(float startTime, float endTime)
         {
             List<TweenData> startedTweens = new List<TweenData>();
             List<TweenData> continuousTweens = new List<TweenData>();
@@ -235,7 +255,7 @@ namespace Numba.Tweening
             completedTweens.Sort((x, y) => (x.StartTime + GetTweenDuration(x.Tween)).CompareTo(y.StartTime + GetTweenDuration(y.Tween)));
             completedCallbacks.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
 
-            return new FilteredTweensAndCallbacks(startedTweens, continuousTweens, completedTweens, completedCallbacks);
+            return new SortedTweensAndCallbacks(startedTweens, continuousTweens, completedTweens, completedCallbacks);
         }
 
         private bool IsValueBetween(float value, float startTime, float endTime) => value >= startTime && value <= endTime;

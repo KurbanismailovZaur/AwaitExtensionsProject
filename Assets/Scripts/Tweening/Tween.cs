@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using static UnityEngine.Debug;
 using System;
+using System.Threading;
 
 namespace Numba.Tweening
 {
@@ -15,6 +16,8 @@ namespace Numba.Tweening
         private TaskCompletionSource<object> _taskSource;
 
         private int _loopsCount = 1;
+
+        private bool _stopRequested;
         #endregion
 
         #region Constructors
@@ -102,16 +105,8 @@ namespace Numba.Tweening
                     Tweak.SetTime(Wrap01(normalizedPassedTime), ease, IsYoyoBackward(normalizedPassedTime));
                     break;
                 case LoopType.ReversedYoyo:
-                    normalizedPassedTime = normalizedPassedTime * loopsCount * 2;
-                    bool isReversed = IsYoyoBackward(normalizedPassedTime);
-
-                    if (isReversed)
-                    {
-                        float value = Tweak.Evaluate(1f - Wrap01(normalizedPassedTime), ease);
-                        Tweak.SetTime(Wrap01(value), ease);
-                    }
-                    else Tweak.SetTime(Wrap01(normalizedPassedTime), ease);
-
+                    float scaledTime = normalizedPassedTime * loopsCount * 2;
+                    Tweak.SetTime(IsYoyoBackward(scaledTime) ? 1f - Wrap01(scaledTime) : Wrap01(scaledTime), ease);
                     break;
             }
         }
@@ -143,113 +138,81 @@ namespace Numba.Tweening
                 return _taskSource.Task;
             }
 
-            _isPlaying = true;
-            _taskSource = new TaskCompletionSource<object>();
-
-            PlayTimeAsync().CatchErrors();
+            PlayTimeAsync(Ease, LoopsCount, LoopType).CatchErrors();
 
             return _taskSource.Task;
         }
 
-        private async Task PlayTimeAsync()
+        private async Task PlayTimeAsync(Ease ease, int loopsCount, LoopType loopType)
         {
-            #region Catching class data for prevent changing
-            float duration = Duration;
-            Ease ease = Ease;
-            int loopsCount = _loopsCount;
-            LoopType loopType = LoopType;
-            #endregion
+            _isPlaying = true;
+            _taskSource = new TaskCompletionSource<object>();
 
-            while (loopsCount != 0)
+            float startTime = Time.time;
+
+            bool isInfinityLoops = loopsCount == -1;
+            if (isInfinityLoops) loopsCount = 1;
+
+            float duration = Duration * loopsCount;
+            if (loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo) duration *= 2f;
+            
+            float endTime = startTime + duration;
+
+            while (isInfinityLoops)
             {
-                float startTime = Time.time;
+                float normalizedPassedTime = (Time.time - startTime) / duration;
 
-                switch (loopType)
+                SetTime(normalizedPassedTime, ease, loopsCount, loopType);
+                await new WaitForUpdate();
+
+                while (endTime < Time.time)
                 {
-                    case LoopType.Forward:
-                        await PlayTimeForwardAsync(startTime, ease);
-                        break;
-                    case LoopType.Backward:
-                        await PlayTimeBackwardAsync(startTime, ease);
-                        break;
-                    case LoopType.Reversed:
-                        await PlayTimeReversedAsync(startTime, ease);
-                        break;
-                    case LoopType.Yoyo:
-                        await PlayTimeYoyoAsync(startTime, ease);
-                        break;
-                    case LoopType.ReversedYoyo:
-                        await PlayTimeReversedYoyoAsync(startTime, ease);
-                        break;
+                    startTime = endTime;
+                    endTime = startTime + duration;
                 }
 
-                if (loopsCount != -1) --loopsCount;
+                if (_stopRequested)
+                {
+                    HandleStop();
+                    return;
+                }
             }
+
+            while (Time.time < endTime)
+            {
+                SetTime((Time.time - startTime) / duration, ease, loopsCount, loopType);
+                await new WaitForUpdate();
+
+                if (_stopRequested)
+                {
+                    HandleStop();
+                    return;
+                }
+            }
+
+            SetTime(1f, ease, loopsCount, loopType);
 
             _isPlaying = false;
             _taskSource.SetResult(null);
         }
 
-        #region Play ways
-        private async Task PlayTimeForwardAsync(float startTime, Ease ease)
+        public void Stop()
         {
-            float endTime = startTime + Duration;
-
-            while (Time.time < endTime)
+            if (!_isPlaying)
             {
-                Tweak.SetTime((Time.time - startTime) / Duration, ease);
-
-                await new WaitForUpdate();
+                LogWarning($"Tween with name \"{Name}\" already playing.");
+                return;
             }
 
-            Tweak.SetTime(1f, ease);
+            _stopRequested = true;
         }
 
-        private async Task PlayTimeBackwardAsync(float startTime, Ease ease)
+        private void HandleStop()
         {
-            float endTime = startTime + Duration;
-
-            while (Time.time < endTime)
-            {
-                Tweak.SetTime((Time.time - startTime) / Duration, ease, true);
-
-                await new WaitForUpdate();
-            }
-
-            Tweak.SetTime(1f, ease, true);
+            _stopRequested = false;
+            _isPlaying = false;
+            _taskSource.SetResult(null);
         }
-
-        private async Task PlayTimeReversedAsync(float startTime, Ease ease)
-        {
-            float endTime = startTime + Duration;
-
-            while (Time.time < endTime)
-            {
-                CalculateReverseAndCallSetter(startTime, ease);
-                await new WaitForUpdate();
-            }
-
-            Tweak.SetTime(0f, ease);
-        }
-
-        private void CalculateReverseAndCallSetter(float startTime, Ease ease)
-        {
-            float reverseValue = Tweak.Evaluate(1f - ((Time.time - startTime) / Duration), ease);
-            Tweak.CallSetter(reverseValue);
-        }
-
-        private async Task PlayTimeYoyoAsync(float startTime, Ease ease)
-        {
-            await PlayTimeForwardAsync(startTime, ease);
-            await PlayTimeBackwardAsync(startTime + Duration, ease);
-        }
-
-        private async Task PlayTimeReversedYoyoAsync(float startTime, Ease ease)
-        {
-            await PlayTimeForwardAsync(startTime, ease);
-            await PlayTimeReversedAsync(startTime + Duration, ease);
-        }
-        #endregion
         #endregion
     }
 }

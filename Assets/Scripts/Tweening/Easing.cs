@@ -14,27 +14,27 @@ namespace Numba.Tweening
             switch (ease)
             {
                 case Tweening.Ease.Linear: return Linear(from, to, normalizedPassedTime);
-                case Tweening.Ease.QuadIn: return QuadraticInEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.QuadOut: return QuadraticOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.QuadInOut: return QuadraticInOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.CubicIn: return CubicInEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.CubicOut: return CubicOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.CubicInOut: return CubicInOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.QuartIn: return QuarticInEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.QuartOut: return QuarticOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.QuartInOut: return QuarticInOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.QuintIn: return QuinticInEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.QuintOut: return QuinticOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.QuintInOut: return QuinticInOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.SineIn: return SinusoidalInEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.SineOut: return SinusoidalOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.SineInOut: return SinusoidalInOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.ExpoIn: return ExponentialInEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.ExpoOut: return ExponentialOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.ExpoInOut: return ExponentialInOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.CircIn: return CircularInEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.CircOut: return CircularOutEase(from, to, normalizedPassedTime);
-                case Tweening.Ease.CircInOut: return CircularInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuad: return QuadraticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuad: return QuadraticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuad: return QuadraticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCubic: return CubicInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCubic: return CubicOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCubic: return CubicInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuart: return QuarticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuart: return QuarticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuart: return QuarticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuint: return QuinticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuint: return QuinticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuint: return QuinticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InSine: return SinusoidalInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutSine: return SinusoidalOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutSine: return SinusoidalInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InExpo: return ExponentialInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutExpo: return ExponentialOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutExpo: return ExponentialInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCirc: return CircularInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCirc: return CircularOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCirc: return CircularInOutEase(from, to, normalizedPassedTime);
                 default: return 0f;
             }
         }
@@ -159,19 +159,20 @@ namespace Numba.Tweening
 
         public static float ExponentialInEase(float from, float to, float normalizedPassedTime)
         {
-            if (normalizedPassedTime == 0f) return from;
-
-            return (to - from) * Pow(2, 10 * (normalizedPassedTime - 1)) + from;
+            return normalizedPassedTime == 1f ? to : (to - from) * Pow(2, 10 * (normalizedPassedTime - 1)) + from;
         }
 
         public static float ExponentialOutEase(float from, float to, float normalizedPassedTime)
         {
-            return (to - from) * (-Pow(2, -10 * normalizedPassedTime) + 1) + from;
+            return normalizedPassedTime == 1f ? to : (to - from) * (-Pow(2, -10 * normalizedPassedTime) + 1) + from;
         }
 
         public static float ExponentialInOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
 
             t /= .5f;
             if (t < 1) return (to - from) / 2 * Pow(2, 10 * (t - 1)) + from;
