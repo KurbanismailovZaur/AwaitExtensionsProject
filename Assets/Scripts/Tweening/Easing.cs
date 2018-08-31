@@ -9,177 +9,197 @@ namespace Numba.Tweening
 {
     public static class Easing
     {
-        public static float Ease(float from, float changeInValue, float passedTime, float duration, Ease ease)
+        public static float Ease(float from, float to, float normalizedPassedTime, Ease ease)
         {
             switch (ease)
             {
-                case Tweening.Ease.Linear: return LinearEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.QuadIn: return QuadraticInEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.QuadOut: return QuadraticOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.QuadInOut: return QuadraticInOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.CubicIn: return CubicInEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.CubicOut: return CubicOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.CubicInOut: return CubicInOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.QuartIn: return QuarticInEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.QuartOut: return QuarticOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.QuartInOut: return QuarticInOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.QuintIn: return QuinticInEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.QuintOut: return QuinticOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.QuintInOut: return QuinticInOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.SineIn: return SinusoidalInEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.SineOut: return SinusoidalOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.SineInOut: return SinusoidalInOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.ExpoIn: return ExponentialInEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.ExpoOut: return ExponentialOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.ExpoInOut: return ExponentialInOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.CircIn: return CircularInEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.CircOut: return CircularOutEase(from, changeInValue, passedTime, duration);
-                case Tweening.Ease.CircInOut: return CircularInOutEase(from, changeInValue, passedTime, duration);
+                case Tweening.Ease.Linear: return Linear(from, to, normalizedPassedTime);
+                case Tweening.Ease.QuadIn: return QuadraticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.QuadOut: return QuadraticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.QuadInOut: return QuadraticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.CubicIn: return CubicInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.CubicOut: return CubicOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.CubicInOut: return CubicInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.QuartIn: return QuarticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.QuartOut: return QuarticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.QuartInOut: return QuarticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.QuintIn: return QuinticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.QuintOut: return QuinticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.QuintInOut: return QuinticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.SineIn: return SinusoidalInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.SineOut: return SinusoidalOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.SineInOut: return SinusoidalInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.ExpoIn: return ExponentialInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.ExpoOut: return ExponentialOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.ExpoInOut: return ExponentialInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.CircIn: return CircularInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.CircOut: return CircularOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.CircInOut: return CircularInOutEase(from, to, normalizedPassedTime);
                 default: return 0f;
             }
         }
 
         #region Ease formulas
-        private static float LinearEase(float b, float c, float t, float d)
+        public static float Linear(float from, float to, float normalizedPassedTime)
         {
-            return c* t / d + b;
+            return (to - from) * normalizedPassedTime + from;
         }
 
-        private static float QuadraticInEase(float b, float c, float t, float d)
+        public static float QuadraticInEase(float from, float to, float normalizedPassedTime)
         {
-            float normalizedTime = t / d;
-            return c * normalizedTime * normalizedTime + b;
+            return (to - from) * normalizedPassedTime * normalizedPassedTime + from;
         }
 
-        private static float QuadraticOutEase(float b, float c, float t, float d)
+        public static float QuadraticOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d;
-            return -c * t * (t - 2) + b;
+            return -(to - from) * normalizedPassedTime * (normalizedPassedTime - 2) + from;
         }
 
-        private static float QuadraticInOutEase(float b, float c, float t, float d)
+        public static float QuadraticInOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d / 2;
-            if (t < 1) return c / 2 * t * t + b;
-            t--;
-            return -c / 2 * (t * (t - 2) - 1) + b;
+            float t = normalizedPassedTime;
+
+            t /= .5f;
+            if (t < 1) return (to - from) / 2 * t * t + from;
+            --t;
+            return -(to - from) / 2 * (t * (t - 2) - 1) + from;
         }
 
-        private static float CubicInEase(float b, float c, float t, float d)
+        public static float CubicInEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d;
-            return c * t * t * t + b;
+            float t = normalizedPassedTime;
+            
+            return (to - from) * t * t * t + from;
         }
 
-        private static float CubicOutEase(float b, float c, float t, float d)
+        public static float CubicOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d;
-            t--;
-            return c * (t * t * t + 1) + b;
+            float t = normalizedPassedTime;
+            
+            --t;
+            return (to - from) * (t * t * t + 1) + from;
         }
 
-        private static float CubicInOutEase(float b, float c, float t, float d)
+        public static float CubicInOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d / 2;
-            if (t < 1) return c / 2 * t * t * t + b;
+            float t = normalizedPassedTime;
+
+            t /= .5f;
+            if (t < 1) return (to - from) / 2 * t * t * t + from;
             t -= 2;
-            return c / 2 * (t * t * t + 2) + b;
+            return (to - from) / 2 * (t * t * t + 2) + from;
         }
 
-        private static float QuarticInEase(float b, float c, float t, float d)
+        public static float QuarticInEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d;
-            return c * t * t * t * t + b;
+            float t = normalizedPassedTime;
+            
+            return (to - from) * t * t * t * t + from;
         }
 
-        private static float QuarticOutEase(float b, float c, float t, float d)
+        public static float QuarticOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d;
-            t--;
-            return -c * (t * t * t * t - 1) + b;
+            float t = normalizedPassedTime;
+            
+            --t;
+            return -(to - from) * (t * t * t * t - 1) + from;
         }
 
-        private static float QuarticInOutEase(float b, float c, float t, float d)
+        public static float QuarticInOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d / 2;
-            if (t < 1) return c / 2 * t * t * t * t + b;
+            float t = normalizedPassedTime;
+            
+            t /= .5f;
+            if (t < 1) return (to - from) / 2 * t * t * t * t + from;
             t -= 2;
-            return -c / 2 * (t * t * t * t - 2) + b;
+            return -(to - from) / 2 * (t * t * t * t - 2) + from;
         }
 
-        private static float QuinticInEase(float b, float c, float t, float d)
+        public static float QuinticInEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d;
-            return c * t * t * t * t * t + b;
+            float t = normalizedPassedTime;
+            
+            return (to - from) * t * t * t * t * t + from;
         }
 
-        private static float QuinticOutEase(float b, float c, float t, float d)
+        public static float QuinticOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d;
-            t--;
-            return c * (t * t * t * t * t + 1) + b;
+            float t = normalizedPassedTime;
+            
+            --t;
+            return (to - from) * (t * t * t * t * t + 1) + from;
         }
 
-        private static float QuinticInOutEase(float b, float c, float t, float d)
+        public static float QuinticInOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d / 2;
-            if (t < 1) return c / 2 * t * t * t * t * t + b;
+            float t = normalizedPassedTime;
+
+            t /= .5f;
+            if (t < 1) return (to - from) / 2 * t * t * t * t * t + from;
             t -= 2;
-            return c / 2 * (t * t * t * t * t + 2) + b;
+            return (to - from) / 2 * (t * t * t * t * t + 2) + from;
         }
 
-        private static float SinusoidalInEase(float b, float c, float t, float d)
+        public static float SinusoidalInEase(float from, float to, float normalizedPassedTime)
         {
-            return -c * Cos(t / d * (PI / 2)) + c + b;
+            float c = to - from;
+
+            return -c * Cos(normalizedPassedTime * (PI / 2)) + c + from;
         }
 
-        private static float SinusoidalOutEase(float b, float c, float t, float d)
+        public static float SinusoidalOutEase(float from, float to, float normalizedPassedTime)
         {
-            return c * Sin(t / d * (PI / 2)) + b;
+            return (to - from) * Sin(normalizedPassedTime * (PI / 2)) + from;
         }
 
-        private static float SinusoidalInOutEase(float b, float c, float t, float d)
+        public static float SinusoidalInOutEase(float from, float to, float normalizedPassedTime)
         {
-            return -c / 2 * (Cos(PI * t / d) - 1) + b;
+            return -(to - from) / 2 * (Cos(PI * normalizedPassedTime) - 1) + from;
         }
 
-        private static float ExponentialInEase(float b, float c, float t, float d)
+        public static float ExponentialInEase(float from, float to, float normalizedPassedTime)
         {
-            return c * Pow(2, 10 * (t / d - 1)) + b;
+            return (to - from) * Pow(2, 10 * (normalizedPassedTime - 1)) + from;
         }
 
-        private static float ExponentialOutEase(float b, float c, float t, float d)
+        public static float ExponentialOutEase(float from, float to, float normalizedPassedTime)
         {
-            return c * (-Pow(2, -10 * t / d) + 1) + b;
+            return (to - from) * (-Pow(2, -10 * normalizedPassedTime) + 1) + from;
         }
 
-        private static float ExponentialInOutEase(float b, float c, float t, float d)
+        public static float ExponentialInOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d / 2;
-            if (t < 1) return c / 2 * Pow(2, 10 * (t - 1)) + b;
-            t--;
-            return c / 2 * (-Pow(2, -10 * t) + 2) + b;
+            float t = normalizedPassedTime;
+
+            t /= .5f;
+            if (t < 1) return (to - from) / 2 * Pow(2, 10 * (t - 1)) + from;
+            --t;
+            return (to - from) / 2 * (-Pow(2, -10 * t) + 2) + from;
         }
 
-        private static float CircularInEase(float b, float c, float t, float d)
+        public static float CircularInEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d;
-            return -c * (Sqrt(1 - t * t) - 1) + b;
+            float t = normalizedPassedTime;
+            
+            return -(to - from) * (Sqrt(1 - t * t) - 1) + from;
         }
 
-        private static float CircularOutEase(float b, float c, float t, float d)
+        public static float CircularOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d;
-            t--;
-            return c * Sqrt(1 - t * t) + b;
+            float t = normalizedPassedTime;
+            
+            --t;
+            return (to - from) * Sqrt(1 - t * t) + from;
         }
 
-        private static float CircularInOutEase(float b, float c, float t, float d)
+        public static float CircularInOutEase(float from, float to, float normalizedPassedTime)
         {
-            t /= d / 2;
-            if (t < 1) return -c / 2 * (Sqrt(1 - t * t) - 1) + b;
+            float t = normalizedPassedTime;
+
+            t /= .5f;
+            if (t < 1) return -(to - from) / 2 * (Sqrt(1 - t * t) - 1) + from;
             t -= 2;
-            return c / 2 * (Sqrt(1 - t * t) + 1) + b;
+            return (to - from) / 2 * (Sqrt(1 - t * t) + 1) + from;
         }
         #endregion
     }

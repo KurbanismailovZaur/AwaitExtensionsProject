@@ -4,81 +4,161 @@ using UnityEngine;
 using System.Threading.Tasks;
 using static UnityEngine.Debug;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace Numba.Tweening
 {
     public class Tween
     {
         #region Fields
-        private float _from;
-
-        private float _to;
-
-        private float _duration;
-
-        private Ease _ease;
-
-        private Action<float> _setter;
-
         private bool _isPlaying;
 
         private TaskCompletionSource<object> _taskSource;
         #endregion
 
+        #region Properties
+        public string Name { get; private set; }
+
+        public Tweak Tweak { get; private set; }
+
+        public float Duration { get; private set; }
+
+        public Ease Ease { get; set; }
+
+        public int LoopCount { get; set; }
+
+        public LoopType LoopType { get; set; }
+        #endregion
+
         #region Constructors
         private Tween() { }
 
-        public Tween(float from, float to, float duration, Action<float> setter)
+        public Tween(float from, float to, Action<float> setter, float duration) : this(string.Empty, from, to, setter, duration) { }
+
+        public Tween(string name, float from, float to, Action<float> setter, float duration) : this(name, new Tweak(from, to, setter), duration) { }
+
+        public Tween(Tweak tweak, float duration) : this(string.Empty, tweak, duration) { }
+
+        public Tween(string name, Tweak tweak, float duration)
         {
-            _from = from;
-            _to = to;
-            _duration = duration;
-            _setter = setter;
+            Name = name;
+            Tweak = tweak;
+            Duration = duration;
         }
         #endregion
 
-        public float Duration { get { return _duration; } }
-
         public Tween SetEase(Ease ease)
         {
-            _ease = ease;
+            Ease = ease;
+            return this;
+        }
+
+        public Tween SetLoopsCount(int count)
+        {
+            LoopCount = count;
+            return this;
+        }
+
+        public Tween SetLoopType(LoopType loopType)
+        {
+            LoopType = loopType;
+            return this;
+        }
+
+        public Tween SetLoops(int count, LoopType loopType)
+        {
+            SetLoopsCount(count);
+            SetLoopType(loopType);
 
             return this;
         }
 
-        public Task PlayAsync() => PlayAsync(Time.time);
-
-        public Task PlayAsync(float startTime)
+        public Task PlayAsync()
         {
             if (_isPlaying)
             {
-                LogWarning("Tween is already playing.");
+                LogWarning($"Tween with name \"{Name}\" already playing.");
                 return _taskSource.Task;
             }
 
-            CreateRoutineAsync(startTime).CatchErrors();
+            _isPlaying = true;
+            _taskSource = new TaskCompletionSource<object>();
+
+            PlayTimeAsync().CatchErrors();
 
             return _taskSource.Task;
         }
 
-        private async Task CreateRoutineAsync(float startTime)
+        private async Task PlayTimeAsync()
         {
-            _isPlaying = true;
-            _taskSource = new TaskCompletionSource<object>();
+            #region Catching class data for prevent changing
+            Ease ease = Ease;
+            int loopsCount = LoopCount;
+            LoopType loopType = LoopType;
+            #endregion
+            
+            float startTime = Time.time;
+            float endTime = startTime + Duration;
 
-            float endTime = startTime + _duration;
-
-            while (Time.time < endTime)
+            if (loopType == LoopType.Forward)
             {
-                _setter(Easing.Ease(_from, _to - _from, Time.time - startTime, _duration, _ease));
-                await new WaitForUpdate();
+                await PlayTimeForwardAsync(startTime, endTime, ease);
             }
-
-            _setter(Easing.Ease(_from, _to - _from, _duration, _duration, _ease));
+            else if (loopType == LoopType.Backward)
+            {
+                await PlayTimeBackwardAsync(startTime, endTime, ease);
+            }
+            else if (loopType == LoopType.Reverse)
+            {
+                await PlayTimeReversedAsync(startTime, endTime, ease);
+            }
 
             _isPlaying = false;
             _taskSource.SetResult(null);
         }
+
+        #region Play ways
+        private async Task PlayTimeForwardAsync(float startTime, float endTime, Ease ease)
+        {
+            while (Time.time < endTime)
+            {
+                Tweak.SetTime((Time.time - startTime) / Duration, ease);
+
+                await new WaitForUpdate();
+            }
+
+            Tweak.SetTime(1f, ease);
+        }
+
+        private async Task PlayTimeBackwardAsync(float startTime, float endTime, Ease ease)
+        {
+            while (Time.time < endTime)
+            {
+                Tweak.SetTime((Time.time - startTime) / Duration, ease, true);
+
+                await new WaitForUpdate();
+            }
+
+            Tweak.SetTime(1f, ease, true);
+        }
+
+        private async Task PlayTimeReversedAsync(float startTime, float endTime, Ease ease)
+        {
+            while (Time.time < endTime)
+            {
+                CalculateReverseAndCallSetter(startTime, ease);
+                await new WaitForUpdate();
+            }
+
+            CalculateReverseAndCallSetter(startTime, ease);
+        }
+
+        private void CalculateReverseAndCallSetter(float startTime, Ease ease)
+        {
+            float reversedPassedNormalizedTime = 1f - ((Time.time - startTime) / Duration);
+            float reverseValue = Tweak.Evaluate(reversedPassedNormalizedTime, ease);
+
+            Tweak.CallSetter(reverseValue);
+        }
+        #endregion
     }
 }

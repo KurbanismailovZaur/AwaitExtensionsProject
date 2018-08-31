@@ -12,58 +12,34 @@ namespace Numba
 {
     public class Test : MonoBehaviour
     {
-        public Transform _cube;
+        [SerializeField]
+        private Transform _cube;
 
-        public float xPos;
+        [SerializeField]
+        private Ease _ease;
 
-        public float duration;
+        [SerializeField]
+        [Range(0f, 1f)]
+        private float _time;
 
-        public Ease ease;
+        [SerializeField]
+        private bool _reversed;
+
+        private Tweak _tweak;
 
         private async void Awake()
         {
-            //await new WaitForBackgroundThread();
+            //_tweak = new Tweak(0, 1, (x) => { _cube.position = new Vector3(x, 0f, 0f); });
+            
+            Tween tween = new Tween("MyTween", 0f, 1f, (x) => { _cube.position = new Vector3(x, 0f, 0f); }, 1f).SetEase(Ease.ExpoIn).SetLoops(2, LoopType.Forward);
+            await tween.PlayAsync();
 
-            Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
-
-            Log((await new WWW("google.ru")).text);
-
-            Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
-
-            await new WaitForBackgroundThread();
-
-            Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
-
-            await new WaitForUpdate();
-
-            Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
-
-            #region Tweens
-            //Tween xPosTween = new Tween(0f, xPos, duration, (x) => { _cube.position = new Vector3(x, 0f, 0f); }).SetEase(ease);
-            //Tween yPosTween = new Tween(0f, xPos, duration, (y) => { _cube.position = new Vector3(0f, y, 0f); }).SetEase(ease);
-            //Tween zPosTween = new Tween(0f, xPos, duration, (z) => { _cube.position = new Vector3(0f, 0f, z); }).SetEase(ease);
-
-            //Sequence sequence = new Sequence(xPosTween, yPosTween, zPosTween);
-            //await sequence.PlayAsync();
-            #endregion
+            Log("Tweened!");
         }
 
         private void Update()
         {
-            Log("Update");
-        }
-
-        private async Task GT()
-        {
-            await Task.Delay(1000).ConfigureAwait(false);
-            Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
-            await new WaitForEndOfFrame();
-            Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
-        }
-
-        private IEnumerator Routine()
-        {
-            yield return new WaitForSeconds(1f);
+            //_tweak.SetTime(_time, _ease, _reversed);
         }
     }
 }

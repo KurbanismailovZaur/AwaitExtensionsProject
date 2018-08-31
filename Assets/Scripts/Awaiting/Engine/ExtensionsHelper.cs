@@ -42,7 +42,7 @@ namespace Numba.Awaiting.Engine
         public static ManualAwaiter GetAwaiterForEnumerator(IEnumerator enumerator)
         {
             ManualAwaiter awaiter = new ManualAwaiter();
-
+            
             if (ContextHelper.IsMainThread) RoutineHelper.Instance.StartCoroutine(WaitForEnumeratorAndContinueRoutine(enumerator, awaiter));
             else ContextHelper.UnitySynchronizationContext.Post((state) => { RoutineHelper.Instance.StartCoroutine(WaitForEnumeratorAndContinueRoutine(enumerator, awaiter)); }, null);
 
