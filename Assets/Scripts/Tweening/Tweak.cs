@@ -46,10 +46,7 @@ namespace Numba.Tweening
 
         public void SetTime(float normalizedPassedTime, Ease ease, bool backward = false)
         {
-            if (_setter == null) return;
-
-            if (backward) _setter(Easing.Ease(To, From, normalizedPassedTime, ease));
-            else _setter(Easing.Ease(From, To, normalizedPassedTime, ease));
+            _setter?.Invoke(Evaluate(normalizedPassedTime, ease, backward));
         }
     }
 }

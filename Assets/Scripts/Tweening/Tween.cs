@@ -13,20 +13,8 @@ namespace Numba.Tweening
         private bool _isPlaying;
 
         private TaskCompletionSource<object> _taskSource;
-        #endregion
 
-        #region Properties
-        public string Name { get; private set; }
-
-        public Tweak Tweak { get; private set; }
-
-        public float Duration { get; private set; }
-
-        public Ease Ease { get; set; }
-
-        public int LoopsCount { get; set; }
-
-        public LoopType LoopType { get; set; }
+        private int _loopsCount = 1;
         #endregion
 
         #region Constructors
@@ -46,6 +34,25 @@ namespace Numba.Tweening
         }
         #endregion
 
+        #region Properties
+        public string Name { get; private set; }
+
+        public Tweak Tweak { get; private set; }
+
+        public float Duration { get; private set; }
+
+        public Ease Ease { get; set; }
+
+        public int LoopsCount
+        {
+            get { return _loopsCount; }
+            set { _loopsCount = Mathf.Max(value, -1); }
+        }
+
+        public LoopType LoopType { get; set; }
+        #endregion
+
+        #region Methods
         public Tween SetEase(Ease ease)
         {
             Ease = ease;
@@ -72,6 +79,62 @@ namespace Numba.Tweening
             return this;
         }
 
+        public void SetTime(float normalizedPassedTime) => SetTime(normalizedPassedTime, Ease, _loopsCount, LoopType);
+
+        private void SetTime(float normalizedPassedTime, Ease ease, int loopsCount, LoopType loopType)
+        {
+            if (loopsCount == -1) loopsCount = 1;
+
+            switch (loopType)
+            {
+                case LoopType.Forward:
+                    Tweak.SetTime(Wrap01(normalizedPassedTime * loopsCount), ease);
+                    break;
+                case LoopType.Backward:
+                    Tweak.SetTime(Wrap01(normalizedPassedTime * loopsCount), ease, true);
+                    break;
+                case LoopType.Reversed:
+                    float reverseValue = Tweak.Evaluate(1f - Wrap01(normalizedPassedTime * loopsCount), ease);
+                    Tweak.CallSetter(reverseValue);
+                    break;
+                case LoopType.Yoyo:
+                    normalizedPassedTime = normalizedPassedTime * loopsCount * 2;
+                    Tweak.SetTime(Wrap01(normalizedPassedTime), ease, IsYoyoBackward(normalizedPassedTime));
+                    break;
+                case LoopType.ReversedYoyo:
+                    normalizedPassedTime = normalizedPassedTime * loopsCount * 2;
+                    bool isReversed = IsYoyoBackward(normalizedPassedTime);
+
+                    if (isReversed)
+                    {
+                        float value = Tweak.Evaluate(1f - Wrap01(normalizedPassedTime), ease);
+                        Tweak.SetTime(Wrap01(value), ease);
+                    }
+                    else Tweak.SetTime(Wrap01(normalizedPassedTime), ease);
+
+                    break;
+            }
+        }
+
+        private float Wrap01(float value)
+        {
+            int intPart = (int)value;
+            float fraction = value - intPart;
+
+            return (intPart != 0 && fraction == 0) ? 1f : fraction;
+        }
+
+        private bool IsYoyoBackward(float value)
+        {
+            int intPart = (int)value;
+            if (intPart == 0) return false;
+
+            float fraction = value - intPart;
+            bool isEven = (intPart % 2) == 0;
+
+            return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
+        }
+
         public Task PlayAsync()
         {
             if (_isPlaying)
@@ -93,7 +156,7 @@ namespace Numba.Tweening
             #region Catching class data for prevent changing
             float duration = Duration;
             Ease ease = Ease;
-            int loopsCount = LoopsCount;
+            int loopsCount = _loopsCount;
             LoopType loopType = LoopType;
             #endregion
 
@@ -171,9 +234,7 @@ namespace Numba.Tweening
 
         private void CalculateReverseAndCallSetter(float startTime, Ease ease)
         {
-            float reversedPassedNormalizedTime = 1f - ((Time.time - startTime) / Duration);
-            float reverseValue = Tweak.Evaluate(reversedPassedNormalizedTime, ease);
-
+            float reverseValue = Tweak.Evaluate(1f - ((Time.time - startTime) / Duration), ease);
             Tweak.CallSetter(reverseValue);
         }
 
@@ -188,6 +249,7 @@ namespace Numba.Tweening
             await PlayTimeForwardAsync(startTime, ease);
             await PlayTimeReversedAsync(startTime + Duration, ease);
         }
+        #endregion
         #endregion
     }
 }
