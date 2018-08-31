@@ -24,7 +24,7 @@ namespace Numba.Tweening
 
         public Ease Ease { get; set; }
 
-        public int LoopCount { get; set; }
+        public int LoopsCount { get; set; }
 
         public LoopType LoopType { get; set; }
         #endregion
@@ -42,7 +42,7 @@ namespace Numba.Tweening
         {
             Name = name;
             Tweak = tweak;
-            Duration = duration;
+            Duration = Mathf.Max(0f, duration);
         }
         #endregion
 
@@ -54,7 +54,7 @@ namespace Numba.Tweening
 
         public Tween SetLoopsCount(int count)
         {
-            LoopCount = count;
+            LoopsCount = count;
             return this;
         }
 
@@ -91,25 +91,36 @@ namespace Numba.Tweening
         private async Task PlayTimeAsync()
         {
             #region Catching class data for prevent changing
+            float duration = Duration;
             Ease ease = Ease;
-            int loopsCount = LoopCount;
+            int loopsCount = LoopsCount;
             LoopType loopType = LoopType;
             #endregion
-            
-            float startTime = Time.time;
-            float endTime = startTime + Duration;
 
-            if (loopType == LoopType.Forward)
+            while (loopsCount != 0)
             {
-                await PlayTimeForwardAsync(startTime, endTime, ease);
-            }
-            else if (loopType == LoopType.Backward)
-            {
-                await PlayTimeBackwardAsync(startTime, endTime, ease);
-            }
-            else if (loopType == LoopType.Reverse)
-            {
-                await PlayTimeReversedAsync(startTime, endTime, ease);
+                float startTime = Time.time;
+
+                switch (loopType)
+                {
+                    case LoopType.Forward:
+                        await PlayTimeForwardAsync(startTime, ease);
+                        break;
+                    case LoopType.Backward:
+                        await PlayTimeBackwardAsync(startTime, ease);
+                        break;
+                    case LoopType.Reversed:
+                        await PlayTimeReversedAsync(startTime, ease);
+                        break;
+                    case LoopType.Yoyo:
+                        await PlayTimeYoyoAsync(startTime, ease);
+                        break;
+                    case LoopType.ReversedYoyo:
+                        await PlayTimeReversedYoyoAsync(startTime, ease);
+                        break;
+                }
+
+                if (loopsCount != -1) --loopsCount;
             }
 
             _isPlaying = false;
@@ -117,8 +128,10 @@ namespace Numba.Tweening
         }
 
         #region Play ways
-        private async Task PlayTimeForwardAsync(float startTime, float endTime, Ease ease)
+        private async Task PlayTimeForwardAsync(float startTime, Ease ease)
         {
+            float endTime = startTime + Duration;
+
             while (Time.time < endTime)
             {
                 Tweak.SetTime((Time.time - startTime) / Duration, ease);
@@ -129,8 +142,10 @@ namespace Numba.Tweening
             Tweak.SetTime(1f, ease);
         }
 
-        private async Task PlayTimeBackwardAsync(float startTime, float endTime, Ease ease)
+        private async Task PlayTimeBackwardAsync(float startTime, Ease ease)
         {
+            float endTime = startTime + Duration;
+
             while (Time.time < endTime)
             {
                 Tweak.SetTime((Time.time - startTime) / Duration, ease, true);
@@ -141,15 +156,17 @@ namespace Numba.Tweening
             Tweak.SetTime(1f, ease, true);
         }
 
-        private async Task PlayTimeReversedAsync(float startTime, float endTime, Ease ease)
+        private async Task PlayTimeReversedAsync(float startTime, Ease ease)
         {
+            float endTime = startTime + Duration;
+
             while (Time.time < endTime)
             {
                 CalculateReverseAndCallSetter(startTime, ease);
                 await new WaitForUpdate();
             }
 
-            CalculateReverseAndCallSetter(startTime, ease);
+            Tweak.SetTime(0f, ease);
         }
 
         private void CalculateReverseAndCallSetter(float startTime, Ease ease)
@@ -158,6 +175,18 @@ namespace Numba.Tweening
             float reverseValue = Tweak.Evaluate(reversedPassedNormalizedTime, ease);
 
             Tweak.CallSetter(reverseValue);
+        }
+
+        private async Task PlayTimeYoyoAsync(float startTime, Ease ease)
+        {
+            await PlayTimeForwardAsync(startTime, ease);
+            await PlayTimeBackwardAsync(startTime + Duration, ease);
+        }
+
+        private async Task PlayTimeReversedYoyoAsync(float startTime, Ease ease)
+        {
+            await PlayTimeForwardAsync(startTime, ease);
+            await PlayTimeReversedAsync(startTime + Duration, ease);
         }
         #endregion
     }

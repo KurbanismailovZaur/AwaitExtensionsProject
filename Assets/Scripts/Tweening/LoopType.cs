@@ -10,7 +10,7 @@ namespace Numba.Tweening
     {
         Forward,
         Backward,
-        Reverse,
+        Reversed,
         Yoyo,
         ReversedYoyo
     }

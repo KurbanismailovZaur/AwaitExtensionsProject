@@ -31,7 +31,7 @@ namespace Numba
         {
             //_tweak = new Tweak(0, 1, (x) => { _cube.position = new Vector3(x, 0f, 0f); });
             
-            Tween tween = new Tween("MyTween", 0f, 1f, (x) => { _cube.position = new Vector3(x, 0f, 0f); }, 1f).SetEase(Ease.ExpoIn).SetLoops(2, LoopType.Forward);
+            Tween tween = new Tween("MyTween", 0f, 1f, (x) => { _cube.position = new Vector3(x, 0f, 0f); }, 1f).SetEase(Ease.ExpoInOut).SetLoops(-1, LoopType.ReversedYoyo);
             await tween.PlayAsync();
 
             Log("Tweened!");

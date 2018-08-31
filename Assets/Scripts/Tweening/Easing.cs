@@ -159,6 +159,8 @@ namespace Numba.Tweening
 
         public static float ExponentialInEase(float from, float to, float normalizedPassedTime)
         {
+            if (normalizedPassedTime == 0f) return from;
+
             return (to - from) * Pow(2, 10 * (normalizedPassedTime - 1)) + from;
         }
 
