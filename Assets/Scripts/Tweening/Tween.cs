@@ -200,7 +200,7 @@ namespace Numba.Tweening
         {
             if (!_isPlaying)
             {
-                LogWarning($"Tween with name \"{Name}\" already playing.");
+                LogWarning($"Tween with name \"{Name}\" already stoped.");
                 return;
             }
 

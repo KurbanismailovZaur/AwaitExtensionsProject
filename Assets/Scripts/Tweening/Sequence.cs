@@ -74,6 +74,8 @@ namespace Numba.Tweening
         private Dictionary<Tween, float> _tweenDurations = new Dictionary<Tween, float>();
 
         private int _loopsCount = 1;
+
+        private bool _stopRequested;
         #endregion
 
         #region Constructors
@@ -198,6 +200,12 @@ namespace Numba.Tweening
 
                     previousTime = timePassed;
                     await new WaitForUpdate();
+
+                    if (_stopRequested)
+                    {
+                        HandleStop();
+                        return;
+                    }
                 }
 
                 if (loopsCount != -1) --loopsCount;
@@ -259,6 +267,24 @@ namespace Numba.Tweening
         }
 
         private bool IsValueBetween(float value, float startTime, float endTime) => value >= startTime && value <= endTime;
+
+        public void Stop()
+        {
+            if (!_isPlaying)
+            {
+                LogWarning($"Sequence with name \"{Name}\" already stoped.");
+                return;
+            }
+
+            _stopRequested = true;
+        }
+
+        private void HandleStop()
+        {
+            _stopRequested = false;
+            _isPlaying = false;
+            _taskSource.SetResult(null);
+        }
         #endregion
     }
 }

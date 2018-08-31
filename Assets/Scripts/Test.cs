@@ -43,8 +43,8 @@ namespace Numba
             //Tween zTween = new Tween("MyZTween", 0f, 3f, (z) => { SetZPosition(_cube, z); }, 3f).SetEase(Ease.QuintInOut).SetLoops(-1, LoopType.ReversedYoyo);
 
             Sequence sequence = new Sequence();
-            sequence.Append(new Tween("Tween0", 0f, 1f, (x) => { SetXPosition(_cube0, x); }, 1f).SetEase(Ease.OutExpo).SetLoops(1, LoopType.ReversedYoyo));
-            sequence.Append(new Tween("Tween1", 0f, 1f, (x) => { SetXPosition(_cube1, x); }, 1f).SetLoops(-1, LoopType.Backward));
+            sequence.Append(new Tween("Tween0", 0f, 1f, (x) => { SetXPosition(_cube0, x); }, 6f).SetEase(Ease.OutExpo).SetLoops(1, LoopType.ReversedYoyo));
+            sequence.Insert(0f, new Tween("Tween1", 0f, 1f, (x) => { SetXPosition(_cube1, x); }, 1f).SetLoops(-1, LoopType.Backward));
 
             await sequence.SetLoopsCount(2).PlayAsync();
 
