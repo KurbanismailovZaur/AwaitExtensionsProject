@@ -65,8 +65,6 @@ namespace Numba.Tweening
 
         private List<CallbackData> _callbacksDatas = new List<CallbackData>();
 
-        private float _endTime;
-
         private bool _isPlaying;
 
         private TaskCompletionSource<object> _taskSource;
@@ -114,6 +112,8 @@ namespace Numba.Tweening
         #region Properties
         public string Name { get; private set; }
 
+        public float Duration { get; private set; }
+
         public int LoopsCount
         {
             get { return _loopsCount; }
@@ -124,25 +124,25 @@ namespace Numba.Tweening
         #region Methods
         public void Append(Tween tween)
         {
-            _tweensDatas.Add(new TweenData(tween, _endTime));
-            _endTime += CalculateAndCacheDuration(tween);
+            _tweensDatas.Add(new TweenData(tween, Duration));
+            Duration += CalculateAndCacheDuration(tween);
         }
 
         public void Append(Action callback)
         {
-            _callbacksDatas.Add(new CallbackData(callback, _endTime));
+            _callbacksDatas.Add(new CallbackData(callback, Duration));
         }
 
         public void Insert(float time, Tween tween)
         {
             _tweensDatas.Add(new TweenData(tween, time));
-            _endTime = Max(_endTime, time + CalculateAndCacheDuration(tween));
+            Duration = Max(Duration, time + CalculateAndCacheDuration(tween));
         }
 
         public void Insert(float time, Action callback)
         {
             _callbacksDatas.Add(new CallbackData(callback, time));
-            _endTime = Max(_endTime, time);
+            Duration = Max(Duration, time);
         }
 
         private float CalculateAndCacheDuration(Tween tween)
@@ -190,7 +190,7 @@ namespace Numba.Tweening
             while (loopsCount != 0)
             {
                 startTime = Time.time;
-                endTime = startTime + _endTime;
+                endTime = startTime + Duration;
                 previousTime = -1f;
 
                 while (Time.time < endTime)
