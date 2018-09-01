@@ -17,7 +17,10 @@ namespace Numba
 
         private async void Awake()
         {
-            await _cube.DoMove(1, 2, 3, 1, Ease.InOutSine, -1, LoopType.ReversedYoyo).PlayAsync();
+            var moveTask = _cube.DoLocalMoveY(1f, 1f, Ease.InOutCirc, 1, LoopType.Yoyo).PlayAsync();
+            var rotateTask = _cube.DoLocalRotate(0, -90, 0, 1, Ease.InOutExpo, 2, LoopType.ReversedYoyo).PlayAsync();
+
+            await Task.WhenAll(moveTask, rotateTask);
 
             Log("Completed");
         }
