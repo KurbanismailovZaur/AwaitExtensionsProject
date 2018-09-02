@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using static UnityEngine.Debug;
 using System;
 using System.Threading;
+using Numba.Tweening.Tweaks;
 
 namespace Numba.Tweening
 {
@@ -23,13 +24,9 @@ namespace Numba.Tweening
         #region Constructors
         private Tween() { }
 
-        //public Tween(float from, float to, Action<float> setter, float duration) : this(string.Empty, from, to, setter, duration) { }
+        public Tween(Tweak tweak, float duration) : this(string.Empty, tweak, duration) { }
 
-        //public Tween(string name, float from, float to, Action<float> setter, float duration) : this(name, new Tweak(from, to, setter), duration) { }
-
-        public Tween(Tweaks.Tweak tweak, float duration) : this(string.Empty, tweak, duration) { }
-
-        public Tween(string name, Tweaks.Tweak tweak, float duration)
+        public Tween(string name, Tweak tweak, float duration)
         {
             Name = name;
             Tweak = tweak;
@@ -40,7 +37,7 @@ namespace Numba.Tweening
         #region Properties
         public string Name { get; private set; }
 
-        public Tweaks.Tweak Tweak { get; private set; }
+        public Tweak Tweak { get; private set; }
 
         public float Duration { get; private set; }
 
@@ -94,14 +91,16 @@ namespace Numba.Tweening
                     Tweak.SetTime(Wrap01(normalizedPassedTime * loopsCount), ease);
                     break;
                 case LoopType.Backward:
-                    Tweak.SetTime(Wrap01(normalizedPassedTime * loopsCount), ease, true);
+                    Tweak.SetTimeBackward(Wrap01(normalizedPassedTime * loopsCount), ease);
                     break;
                 case LoopType.Reversed:
                     Tweak.SetTime(1f - Wrap01(normalizedPassedTime * loopsCount), ease);
                     break;
                 case LoopType.Yoyo:
                     normalizedPassedTime = normalizedPassedTime * loopsCount * 2;
-                    Tweak.SetTime(Wrap01(normalizedPassedTime), ease, IsYoyoBackward(normalizedPassedTime));
+
+                    if (IsYoyoBackward(normalizedPassedTime)) Tweak.SetTimeBackward(Wrap01(normalizedPassedTime), ease);
+                    else Tweak.SetTime(Wrap01(normalizedPassedTime), ease);
                     break;
                 case LoopType.ReversedYoyo:
                     float scaledTime = normalizedPassedTime * loopsCount * 2;
@@ -159,28 +158,28 @@ namespace Numba.Tweening
 
             while (isInfinityLoops)
             {
-                float normalizedPassedTime = (Time.time - startTime) / duration;
-
-                SetTime(normalizedPassedTime, ease, loopsCount, loopType);
                 await new WaitForUpdate();
+
+                if (_stopRequested)
+                {
+                    HandleStop();
+                    return;
+                }
+
+                float normalizedPassedTime = (Time.time - startTime) / duration;
+                SetTime(normalizedPassedTime, ease, loopsCount, loopType);
 
                 while (endTime < Time.time)
                 {
                     startTime = endTime;
                     endTime = startTime + duration;
                 }
-
-                if (_stopRequested)
-                {
-                    HandleStop();
-                    return;
-                }
             }
 
             while (Time.time < endTime)
             {
-                SetTime((Time.time - startTime) / duration, ease, loopsCount, loopType);
                 await new WaitForUpdate();
+                SetTime((Mathf.Min(Time.time, endTime) - startTime) / duration, ease, loopsCount, loopType);
 
                 if (_stopRequested)
                 {
@@ -188,7 +187,6 @@ namespace Numba.Tweening
                     return;
                 }
             }
-            SetTime(1f, ease, loopsCount, loopType);
 
             _isPlaying = false;
             _taskSource.SetResult(null);

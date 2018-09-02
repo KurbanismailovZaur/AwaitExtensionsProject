@@ -25,9 +25,14 @@ namespace Numba
 
         private async void Awake()
         {
+            // bool byte, sbyte, short, ushort, int, uint, long, ulong, decimal, float, double string, DateTime
+            
+            await new Tween(new TweakDateTime(new DateTime(), DateTime.Now, (dt) => Log(dt)), 1f).PlayAsync();
+
             //tweak = new TweakFloat(0f, 1f, (x) => _cube.position = new Vector3(x, 0, 0));
 
-            await new Tween(new TweakFloat(0, 3600, (x) => _cube.eulerAngles = new Vector3(0, x, 0)), 1f).SetEase(Ease.InExpo).SetLoops(1, LoopType.Reversed).PlayAsync();
+            //await new Tween(new TweakByte(0, 240, (x) => _cube.eulerAngles = new Vector3(0, x, 0)), 1f).SetEase(Ease.InExpo).SetLoops(1, LoopType.Forward).PlayAsync();
+            //await new Tween(new TweakInt(0, 360, (x) => _cube.eulerAngles = new Vector3(0, x, 0)), 1f).SetEase(Ease.InExpo).SetLoops(1, LoopType.Reversed).PlayAsync();
 
             //var moveTask = _cube.DoMoveX(2f, 1f, Ease.Linear, 1, LoopType.Yoyo).PlayAsync();
             //var rotateTask = _cube.DoRotate(0, 90, 0, 1, RotationQuality.Best, Ease.Linear, 1, LoopType.ReversedYoyo).PlayAsync();

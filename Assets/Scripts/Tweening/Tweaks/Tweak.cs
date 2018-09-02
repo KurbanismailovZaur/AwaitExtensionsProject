@@ -9,14 +9,11 @@ namespace Numba.Tweening.Tweaks
 {
     public abstract class Tweak
     {
-        public abstract void SetTime(float normalizedPassedTime, Ease ease, bool backward = false);
+        public abstract void SetTime(float normalizedPassedTime, Ease ease);
 
-        //public abstract void SetTimeReverse(float normalizedPassedTime, Ease ease, bool backward = false);
+        public abstract void SetTimeBackward(float normalizedPassedTime, Ease ease);
 
-        //public static Tweak Create(float from, float to, Action<float> setter)
-        //{
-        //    return new TweakFloat(from, to, setter);
-        //}
+        public abstract void Increment();
     }
 
     public abstract class Tweak<T> : Tweak
@@ -26,7 +23,7 @@ namespace Numba.Tweening.Tweaks
 
         public T To { get; set; }
 
-        private Action<T> _setter;
+        protected Action<T> _setter;
         #endregion
 
         #region Constructors
@@ -39,7 +36,6 @@ namespace Numba.Tweening.Tweaks
             _setter = setter;
         }
         #endregion
-
         public void SetSetter(Action<T> setter)
         {
             _setter = setter;
@@ -50,13 +46,18 @@ namespace Numba.Tweening.Tweaks
             _setter?.Invoke(value);
         }
 
-        protected abstract T Evaluate(float normalizedPassedTime, Ease ease, bool backward = false);
+        protected abstract T Evaluate(float normalizedPassedTime, Ease ease);
 
-        public sealed override void SetTime(float normalizedPassedTime, Ease ease, bool backward = false)
+        protected abstract T EvaluateBackward(float normalizedPassedTime, Ease ease);
+
+        public sealed override void SetTime(float normalizedPassedTime, Ease ease)
         {
-            CallSetter(Evaluate(normalizedPassedTime, ease, backward));
+            CallSetter(Evaluate(normalizedPassedTime, ease));
         }
 
-        
+        public sealed override void SetTimeBackward(float normalizedPassedTime, Ease ease)
+        {
+            CallSetter(Evaluate(normalizedPassedTime, ease));
+        }
     }
 }

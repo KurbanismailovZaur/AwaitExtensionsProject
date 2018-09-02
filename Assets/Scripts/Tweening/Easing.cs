@@ -9,7 +9,7 @@ namespace Numba.Tweening
 {
     public static class Easing
     {
-        private const float _lerpThresold = 0.005f;
+        private const float _lerpThresold = 0.05f;
 
         private const float _calculationThresold = 0.0009765625f;
 
@@ -49,6 +49,27 @@ namespace Numba.Tweening
         }
 
         #region Ease formulas
+        #region Linear
+        public static int Linear(int from, int to, float normalizedPassedTime)
+        {
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            return (int)((to - from) * t + from);
+        }
+
+        public static long Linear(long from, long to, float normalizedPassedTime)
+        {
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            return (long)((to - from) * t + from);
+        }
+
         public static float Linear(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
@@ -58,6 +79,17 @@ namespace Numba.Tweening
 
             return (to - from) * t + from;
         }
+
+        public static double Linear(double from, double to, float normalizedPassedTime)
+        {
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            return (to - from) * t + from;
+        }
+        #endregion
 
         public static float QuadraticInEase(float from, float to, float normalizedPassedTime)
         {
@@ -233,14 +265,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            float result = (to - from) * Pow(2, 10 * (t - 1)) + from;
-
-            return result;
-            //if (normalizedPassedTime < _lerpThresold)
-            //{
-            //    return Remap(result, _calculationThresold, _lerpThresold, 0f, _lerpThresold);
-            //}
-            //else return result;
+            return (to - from) * Pow(2, 10 * (t - 1)) + from;
         }
 
         public static float ExponentialOutEase(float from, float to, float normalizedPassedTime)

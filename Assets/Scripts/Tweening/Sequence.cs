@@ -195,11 +195,12 @@ namespace Numba.Tweening
 
                 while (Time.time < endTime)
                 {
-                    timePassed = Time.time - startTime;
+                    await new WaitForUpdate();
+
+                    timePassed = Min(Time.time, endTime) - startTime;
                     UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
 
                     previousTime = timePassed;
-                    await new WaitForUpdate();
 
                     if (_stopRequested)
                     {
