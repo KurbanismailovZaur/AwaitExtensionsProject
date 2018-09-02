@@ -9,6 +9,15 @@ namespace Numba.Tweening
 {
     public static class Easing
     {
+        private const float _lerpThresold = 0.005f;
+
+        private const float _calculationThresold = 0.0009765625f;
+
+        private static float Remap(float value, float iMin, float iMax, float oMin, float oMax)
+        {
+            return oMin + (value - iMin) * (oMax - oMin) / (iMax - iMin);
+        }
+
         public static float Ease(float from, float to, float normalizedPassedTime, Ease ease)
         {
             switch (ease)
@@ -42,22 +51,40 @@ namespace Numba.Tweening
         #region Ease formulas
         public static float Linear(float from, float to, float normalizedPassedTime)
         {
-            return (to - from) * normalizedPassedTime + from;
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            return (to - from) * t + from;
         }
 
         public static float QuadraticInEase(float from, float to, float normalizedPassedTime)
         {
-            return (to - from) * normalizedPassedTime * normalizedPassedTime + from;
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            return (to - from) * t * t + from;
         }
 
         public static float QuadraticOutEase(float from, float to, float normalizedPassedTime)
         {
-            return -(to - from) * normalizedPassedTime * (normalizedPassedTime - 2) + from;
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            return -(to - from) * t * (t - 2) + from;
         }
 
         public static float QuadraticInOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
 
             t /= .5f;
             if (t < 1) return (to - from) / 2 * t * t + from;
@@ -68,14 +95,20 @@ namespace Numba.Tweening
         public static float CubicInEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
-            
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             return (to - from) * t * t * t + from;
         }
 
         public static float CubicOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
-            
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             --t;
             return (to - from) * (t * t * t + 1) + from;
         }
@@ -83,6 +116,9 @@ namespace Numba.Tweening
         public static float CubicInOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
 
             t /= .5f;
             if (t < 1) return (to - from) / 2 * t * t * t + from;
@@ -93,14 +129,20 @@ namespace Numba.Tweening
         public static float QuarticInEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
-            
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             return (to - from) * t * t * t * t + from;
         }
 
         public static float QuarticOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
-            
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             --t;
             return -(to - from) * (t * t * t * t - 1) + from;
         }
@@ -108,7 +150,10 @@ namespace Numba.Tweening
         public static float QuarticInOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
-            
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             t /= .5f;
             if (t < 1) return (to - from) / 2 * t * t * t * t + from;
             t -= 2;
@@ -118,14 +163,20 @@ namespace Numba.Tweening
         public static float QuinticInEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
-            
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             return (to - from) * t * t * t * t * t + from;
         }
 
         public static float QuinticOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
-            
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             --t;
             return (to - from) * (t * t * t * t * t + 1) + from;
         }
@@ -133,6 +184,9 @@ namespace Numba.Tweening
         public static float QuinticInOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
 
             t /= .5f;
             if (t < 1) return (to - from) / 2 * t * t * t * t * t + from;
@@ -142,29 +196,61 @@ namespace Numba.Tweening
 
         public static float SinusoidalInEase(float from, float to, float normalizedPassedTime)
         {
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             float c = to - from;
 
-            return -c * Cos(normalizedPassedTime * (PI / 2)) + c + from;
+            return -c * Cos(t * (PI / 2)) + c + from;
         }
 
         public static float SinusoidalOutEase(float from, float to, float normalizedPassedTime)
         {
-            return (to - from) * Sin(normalizedPassedTime * (PI / 2)) + from;
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            return (to - from) * Sin(t * (PI / 2)) + from;
         }
 
         public static float SinusoidalInOutEase(float from, float to, float normalizedPassedTime)
         {
-            return -(to - from) / 2 * (Cos(PI * normalizedPassedTime) - 1) + from;
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            return -(to - from) / 2 * (Cos(PI * t) - 1) + from;
         }
 
         public static float ExponentialInEase(float from, float to, float normalizedPassedTime)
         {
-            return normalizedPassedTime == 1f ? to : (to - from) * Pow(2, 10 * (normalizedPassedTime - 1)) + from;
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            float result = (to - from) * Pow(2, 10 * (t - 1)) + from;
+
+            return result;
+            //if (normalizedPassedTime < _lerpThresold)
+            //{
+            //    return Remap(result, _calculationThresold, _lerpThresold, 0f, _lerpThresold);
+            //}
+            //else return result;
         }
 
         public static float ExponentialOutEase(float from, float to, float normalizedPassedTime)
         {
-            return normalizedPassedTime == 1f ? to : (to - from) * (-Pow(2, -10 * normalizedPassedTime) + 1) + from;
+            float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
+            return (to - from) * (-Pow(2, -10 * t) + 1) + from;
         }
 
         public static float ExponentialInOutEase(float from, float to, float normalizedPassedTime)
@@ -183,14 +269,20 @@ namespace Numba.Tweening
         public static float CircularInEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
-            
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             return -(to - from) * (Sqrt(1 - t * t) - 1) + from;
         }
 
         public static float CircularOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
-            
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
+
             --t;
             return (to - from) * Sqrt(1 - t * t) + from;
         }
@@ -198,6 +290,9 @@ namespace Numba.Tweening
         public static float CircularInOutEase(float from, float to, float normalizedPassedTime)
         {
             float t = normalizedPassedTime;
+
+            if (t == 0f) return from;
+            if (t == 1f) return to;
 
             t /= .5f;
             if (t < 1) return -(to - from) / 2 * (Sqrt(1 - t * t) - 1) + from;

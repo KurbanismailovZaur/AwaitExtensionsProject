@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using static UnityEngine.Debug;
 using System;
+using Numba.Tweening.Tweaks;
 
 namespace Numba.Tweening
 {
@@ -63,7 +64,7 @@ namespace Numba.Tweening
             return sequence;
         }
 
-        private static Tween DoMoveAxis(Func<float> axisValueGetter, Action<float> axisValueSetter, float position, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(axisValueGetter(), position, axisValueSetter, duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        private static Tween DoMoveAxis(Func<float> axisValueGetter, Action<float> axisValueSetter, float position, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(axisValueGetter(), position, axisValueSetter), duration).SetEase(ease).SetLoops(loopsCount, loopType);
 
         private static void ChangeTransformPosition(Transform transform, Space space, int axis, float value)
         {
@@ -101,7 +102,7 @@ namespace Numba.Tweening
         public static Sequence DoLocalRotate(this Transform transform, float x, float y, float z, float duration, RotationQuality rotationQuality = RotationQuality.Best, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => DoRotate(transform, Space.Self, x, y, z, duration, rotationQuality, ease, loopsCount, loopType);
         #endregion
 
-        private static Tween DoRotateAxis(Func<float> angleGetter, float angle, Action<float> angleSetter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(angleGetter(), angle, angleSetter, duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        private static Tween DoRotateAxis(Func<float> angleGetter, float angle, Action<float> angleSetter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(angleGetter(), angle, angleSetter), duration).SetEase(ease).SetLoops(loopsCount, loopType);
 
         private static Sequence DoRotate(Transform transform, Space space, float x, float y, float z, float duration, RotationQuality rotationQuality = RotationQuality.Best, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
@@ -142,7 +143,7 @@ namespace Numba.Tweening
                 else setter = (t) => { transform.localRotation = Quaternion.Lerp(startRotation, endRotation, t); };
 
                 Sequence sequence = new Sequence();
-                sequence.Append(new Tween(0f, 1f, setter, duration).SetEase(ease).SetLoopType(loopType));
+                sequence.Append(new Tween(new TweakFloat(0f, 1f, setter), duration).SetEase(ease).SetLoopType(loopType));
                 sequence.LoopsCount = loopsCount;
 
                 return sequence;
@@ -168,7 +169,7 @@ namespace Numba.Tweening
 
         private static Tween DoLocalScaleAxis(Func<float> axisScaleGetter, float value, Action<float> axisScaleSetter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return new Tween(axisScaleGetter(), value, axisScaleSetter, duration).SetEase(ease).SetLoops(loopsCount, loopType);
+            return new Tween(new TweakFloat(axisScaleGetter(), value, axisScaleSetter), duration).SetEase(ease).SetLoops(loopsCount, loopType);
         }
 
         public static Sequence DoLocalScale(this Transform transform, float uniformScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => DoLocalScale(transform, uniformScale, uniformScale, uniformScale, duration, ease, loopsCount, loopType);

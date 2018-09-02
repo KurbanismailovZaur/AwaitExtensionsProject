@@ -6,6 +6,8 @@ using static UnityEngine.Debug;
 using System.Threading;
 using UnityEngine.SceneManagement;
 using System;
+//using Numba.Tweening;
+using Numba.Tweening.Tweaks;
 using Numba.Tweening;
 
 namespace Numba
@@ -15,17 +17,33 @@ namespace Numba
         [SerializeField]
         private Transform _cube;
 
+        [SerializeField]
+        [Range(0f, 1f)]
+        private float _time;
+
+        private Tweening.Tweaks.Tweak tweak;
+
         private async void Awake()
         {
-            var moveTask = _cube.DoMoveX(2f, 1f, Ease.Linear, 1, LoopType.Yoyo).PlayAsync();
-            var rotateTask = _cube.DoRotate(0, 90, 0, 1, RotationQuality.Best, Ease.Linear, 1, LoopType.Yoyo).PlayAsync();
-            var scaleTask = _cube.DoLocalScale(2, 3, 4, 1, Ease.Linear, 3, LoopType.Yoyo).PlayAsync();
+            //tweak = new TweakFloat(0f, 1f, (x) => _cube.position = new Vector3(x, 0, 0));
 
-            await Task.WhenAll(moveTask, rotateTask, scaleTask);
+            await new Tween(new TweakFloat(0, 3600, (x) => _cube.eulerAngles = new Vector3(0, x, 0)), 1f).SetEase(Ease.InExpo).SetLoops(1, LoopType.Reversed).PlayAsync();
 
-            await _cube.DoRotateY(3600, 2f, Ease.InExpo, 1, LoopType.ReversedYoyo).PlayAsync();
+            //var moveTask = _cube.DoMoveX(2f, 1f, Ease.Linear, 1, LoopType.Yoyo).PlayAsync();
+            //var rotateTask = _cube.DoRotate(0, 90, 0, 1, RotationQuality.Best, Ease.Linear, 1, LoopType.ReversedYoyo).PlayAsync();
+            //var scaleTask = _cube.DoLocalScale(2, 3, 4, 1, Ease.Linear, 3, LoopType.Yoyo).PlayAsync();
+
+            //await Task.WhenAll(moveTask, rotateTask, scaleTask);
+
+            //await _cube.DoRotateY(36000, 2f, Ease.InExpo, 1, LoopType.Reversed).PlayAsync();
 
             Log("Completed");
+        }
+
+        private void Update()
+        {
+            //Log("Update");
+            //tweak.SetTime(_time, Ease.InExpo);
         }
     }
 }

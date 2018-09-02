@@ -23,13 +23,13 @@ namespace Numba.Tweening
         #region Constructors
         private Tween() { }
 
-        public Tween(float from, float to, Action<float> setter, float duration) : this(string.Empty, from, to, setter, duration) { }
+        //public Tween(float from, float to, Action<float> setter, float duration) : this(string.Empty, from, to, setter, duration) { }
 
-        public Tween(string name, float from, float to, Action<float> setter, float duration) : this(name, new Tweak(from, to, setter), duration) { }
+        //public Tween(string name, float from, float to, Action<float> setter, float duration) : this(name, new Tweak(from, to, setter), duration) { }
 
-        public Tween(Tweak tweak, float duration) : this(string.Empty, tweak, duration) { }
+        public Tween(Tweaks.Tweak tweak, float duration) : this(string.Empty, tweak, duration) { }
 
-        public Tween(string name, Tweak tweak, float duration)
+        public Tween(string name, Tweaks.Tweak tweak, float duration)
         {
             Name = name;
             Tweak = tweak;
@@ -40,7 +40,7 @@ namespace Numba.Tweening
         #region Properties
         public string Name { get; private set; }
 
-        public Tweak Tweak { get; private set; }
+        public Tweaks.Tweak Tweak { get; private set; }
 
         public float Duration { get; private set; }
 
@@ -97,8 +97,7 @@ namespace Numba.Tweening
                     Tweak.SetTime(Wrap01(normalizedPassedTime * loopsCount), ease, true);
                     break;
                 case LoopType.Reversed:
-                    float reverseValue = Tweak.Evaluate(1f - Wrap01(normalizedPassedTime * loopsCount), ease);
-                    Tweak.CallSetter(reverseValue);
+                    Tweak.SetTime(1f - Wrap01(normalizedPassedTime * loopsCount), ease);
                     break;
                 case LoopType.Yoyo:
                     normalizedPassedTime = normalizedPassedTime * loopsCount * 2;
@@ -155,7 +154,7 @@ namespace Numba.Tweening
 
             float duration = Duration * loopsCount;
             if (loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo) duration *= 2f;
-            
+
             float endTime = startTime + duration;
 
             while (isInfinityLoops)
@@ -189,7 +188,6 @@ namespace Numba.Tweening
                     return;
                 }
             }
-
             SetTime(1f, ease, loopsCount, loopType);
 
             _isPlaying = false;
