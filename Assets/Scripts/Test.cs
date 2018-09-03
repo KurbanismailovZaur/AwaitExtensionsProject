@@ -9,6 +9,7 @@ using System;
 //using Numba.Tweening;
 using Numba.Tweening.Tweaks;
 using Numba.Tweening;
+using UnityEngine.UI;
 
 namespace Numba
 {
@@ -21,13 +22,23 @@ namespace Numba
         [Range(0f, 1f)]
         private float _time;
 
-        private Tweening.Tweaks.Tweak tweak;
+        private Tweak tweak;
+        
+        private DateTime _from = new DateTime(2018, 8, 1);
+
+        private DateTime _to = DateTime.Now;
+
+        [SerializeField]
+        private Text _text;
 
         private async void Awake()
         {
-            // bool byte, sbyte, short, ushort, int, uint, long, ulong, decimal, float, double string, DateTime
-            
-            await new Tween(new TweakDateTime(new DateTime(), DateTime.Now, (dt) => Log(dt)), 1f).PlayAsync();
+            Log(_from);
+            Log(_to);
+
+            await new Tween(new TweakDateTime(_from, _to, (dt) => _text.text = dt.ToString()), 4f).SetEase(Ease.InExpo).SetLoops(-1, LoopType.ReversedYoyo).PlayAsync();
+
+            //await new Tween(new TweakDateTime(new DateTime(), DateTime.Now, (dt) => Log(dt)), 1f).PlayAsync();
 
             //tweak = new TweakFloat(0f, 1f, (x) => _cube.position = new Vector3(x, 0, 0));
 
@@ -47,7 +58,7 @@ namespace Numba
 
         private void Update()
         {
-            //Log("Update");
+            //_text.text = Easing.Linear(_from, _to, _time).ToString();
             //tweak.SetTime(_time, Ease.InExpo);
         }
     }

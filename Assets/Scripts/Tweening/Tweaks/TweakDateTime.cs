@@ -22,8 +22,8 @@ namespace Numba.Tweening.Tweaks
             To = To + change;
         }
 
-        protected override DateTime Evaluate(float normalizedPassedTime, Ease ease) => new DateTime((long)Easing.Ease(From.Ticks, To.Ticks, normalizedPassedTime, ease));
+        protected override DateTime Evaluate(float normalizedPassedTime, Ease ease) => Easing.Ease(From, To, normalizedPassedTime, ease);
 
-        protected override DateTime EvaluateBackward(float normalizedPassedTime, Ease ease) => new DateTime((long)Easing.Ease(To.Ticks, From.Ticks, normalizedPassedTime, ease));
+        protected override DateTime EvaluateBackward(float normalizedPassedTime, Ease ease) => Easing.Ease(To, From, normalizedPassedTime, ease);
     }
 }
