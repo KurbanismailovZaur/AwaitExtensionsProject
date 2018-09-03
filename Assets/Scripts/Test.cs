@@ -23,7 +23,7 @@ namespace Numba
         private float _time;
 
         private Tweak tweak;
-        
+
         private DateTime _from = new DateTime(2018, 8, 1);
 
         private DateTime _to = DateTime.Now;
@@ -33,7 +33,13 @@ namespace Numba
 
         private async void Awake()
         {
-            await new Tween(new TweakQuaternion(Quaternion.identity, Quaternion.Euler(0f, 90f, 0f), (q) => _cube.localRotation = q), 1f).SetEase(Ease.InOutExpo).SetLoops(2, LoopType.ReversedYoyo).PlayAsync();
+            var moveTask = _cube.DoMove(0f, 1f, 0f, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).PlayAsync();
+            var rotateTask = _cube.DoLocalRotate(0f, 90f, 0f, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).PlayAsync();
+            var scaleTask = _cube.DoLocalScale(1, 2, 3, 1, Ease.InOutExpo, 1, LoopType.ReversedYoyo).PlayAsync();
+
+            await Task.WhenAll(moveTask, rotateTask, scaleTask);
+
+            //await new Tween(new TweakQuaternion(Quaternion.identity, Quaternion.Euler(0f, 90f, 0f), (q) => _cube.localRotation = q), 1f).SetEase(Ease.InOutExpo).SetLoops(2, LoopType.ReversedYoyo).PlayAsync();
             //await new Tween(new TweakFloat(0f, 1f, (v2) => _text.text = v2.ToString()), 4f).SetEase(Ease.OutExpo).SetLoops(3, LoopType.Backward).PlayAsync();
 
             //await new Tween(new TweakDateTime(new DateTime(), DateTime.Now, (dt) => Log(dt)), 1f).PlayAsync();
