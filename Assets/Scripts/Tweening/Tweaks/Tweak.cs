@@ -36,6 +36,7 @@ namespace Numba.Tweening.Tweaks
             _setter = setter;
         }
         #endregion
+
         public void SetSetter(Action<T> setter)
         {
             _setter = setter;

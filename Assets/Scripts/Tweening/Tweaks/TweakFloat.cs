@@ -22,11 +22,8 @@ namespace Numba.Tweening.Tweaks
             To = To + change;
         }
 
-        protected override float Evaluate(float normalizedPassedTime, Ease ease)
-        {
-            Log("EVALUATE"); return Easing.Ease(From, To, normalizedPassedTime, ease);
-        }
+        protected override float Evaluate(float normalizedPassedTime, Ease ease) => Easing.Ease(From, To, normalizedPassedTime, ease);
 
-        protected override float EvaluateBackward(float normalizedPassedTime, Ease ease) { Log(normalizedPassedTime); return Easing.Ease(To, From, normalizedPassedTime, ease);}
+        protected override float EvaluateBackward(float normalizedPassedTime, Ease ease) => Easing.Ease(To, From, normalizedPassedTime, ease);
     }
 }
