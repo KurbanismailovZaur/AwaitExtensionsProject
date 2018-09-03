@@ -19,6 +19,10 @@ namespace Numba.Tweening
         private int _loopsCount = 1;
 
         private bool _stopRequested;
+
+        private Ease _ease;
+
+        private AnimationCurve _curve = new AnimationCurve();
         #endregion
 
         #region Constructors
@@ -41,7 +45,27 @@ namespace Numba.Tweening
 
         public float Duration { get; private set; }
 
-        public Ease Ease { get; set; }
+        public EaseType UsedEaseType { get; set; }
+
+        public Ease Ease
+        {
+            get { return _ease; }
+            set
+            {
+                _ease = value;
+                UsedEaseType = EaseType.Formula;
+            }
+        }
+
+        public AnimationCurve Curve
+        {
+            get { return _curve; }
+            set
+            {
+                _curve.keys = value.keys;
+                UsedEaseType = EaseType.Curve;
+            }
+        }
 
         public int LoopsCount
         {
@@ -56,6 +80,12 @@ namespace Numba.Tweening
         public Tween SetEase(Ease ease)
         {
             Ease = ease;
+            return this;
+        }
+
+        public Tween SetEase(AnimationCurve curve)
+        {
+            Curve = curve;
             return this;
         }
 
@@ -79,32 +109,55 @@ namespace Numba.Tweening
             return this;
         }
 
-        public void SetTime(float normalizedPassedTime) => SetTime(normalizedPassedTime, Ease, _loopsCount, LoopType);
+        public void SetTime(float normalizedTime) => SetTime(normalizedTime, UsedEaseType, Ease, _curve, _loopsCount, LoopType);
 
-        private void SetTime(float normalizedPassedTime, Ease ease, int loopsCount, LoopType loopType)
+        private void SetTime(float normalizedTime, EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
         {
             if (loopsCount == -1) loopsCount = 1;
 
             switch (loopType)
             {
                 case LoopType.Forward:
-                    Tweak.SetTime(Wrap01(normalizedPassedTime * loopsCount), ease);
+                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(normalizedTime * loopsCount), ease);
+                    else Tweak.SetTime(Wrap01(normalizedTime * loopsCount), curve);
                     break;
                 case LoopType.Backward:
-                    Tweak.SetTimeBackward(Wrap01(normalizedPassedTime * loopsCount), ease);
+                    if (usedEaseType == EaseType.Formula) Tweak.SetTimeBackward(Wrap01(normalizedTime * loopsCount), ease);
+                    else Tweak.SetTimeBackward(Wrap01(normalizedTime * loopsCount), curve);
                     break;
                 case LoopType.Reversed:
-                    Tweak.SetTime(1f - Wrap01(normalizedPassedTime * loopsCount), ease);
+                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(1f - Wrap01(normalizedTime * loopsCount), ease);
+                    else Tweak.SetTime(1f - Wrap01(normalizedTime * loopsCount), curve);
                     break;
                 case LoopType.Yoyo:
-                    normalizedPassedTime = normalizedPassedTime * loopsCount * 2;
+                    normalizedTime = normalizedTime * loopsCount * 2;
 
-                    if (IsYoyoBackward(normalizedPassedTime)) Tweak.SetTimeBackward(Wrap01(normalizedPassedTime), ease);
-                    else Tweak.SetTime(Wrap01(normalizedPassedTime), ease);
+                    if (IsYoyoBackward(normalizedTime))
+                    {
+                        if (usedEaseType == EaseType.Formula) Tweak.SetTimeBackward(Wrap01(normalizedTime), ease);
+                        else Tweak.SetTimeBackward(Wrap01(normalizedTime), curve);
+                    }
+                    else
+                    {
+                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(normalizedTime), ease);
+                        else Tweak.SetTime(Wrap01(normalizedTime), curve);
+                    }
+
                     break;
                 case LoopType.ReversedYoyo:
-                    float scaledTime = normalizedPassedTime * loopsCount * 2;
-                    Tweak.SetTime(IsYoyoBackward(scaledTime) ? 1f - Wrap01(scaledTime) : Wrap01(scaledTime), ease);
+                    float scaledTime = normalizedTime * loopsCount * 2;
+
+                    if (IsYoyoBackward(scaledTime))
+                    {
+                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(1f - Wrap01(scaledTime), ease);
+                        else Tweak.SetTime(1f - Wrap01(scaledTime), curve);
+                    }
+                    else
+                    {
+                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(scaledTime), ease);
+                        else Tweak.SetTime(Wrap01(scaledTime), curve);
+                    }
+                    
                     break;
             }
         }
@@ -136,12 +189,12 @@ namespace Numba.Tweening
                 return _taskSource.Task;
             }
 
-            PlayTimeAsync(Ease, LoopsCount, LoopType).CatchErrors();
+            PlayTimeAsync(UsedEaseType, Ease, new AnimationCurve(_curve.keys), LoopsCount, LoopType).CatchErrors();
 
             return _taskSource.Task;
         }
 
-        private async Task PlayTimeAsync(Ease ease, int loopsCount, LoopType loopType)
+        private async Task PlayTimeAsync(EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
         {
             _isPlaying = true;
             _taskSource = new TaskCompletionSource<object>();
@@ -166,8 +219,8 @@ namespace Numba.Tweening
                     return;
                 }
 
-                float normalizedPassedTime = (Time.time - startTime) / duration;
-                SetTime(normalizedPassedTime, ease, loopsCount, loopType);
+                float normalizedTime = (Time.time - startTime) / duration;
+                SetTime(normalizedTime, usedEaseType, ease, curve, loopsCount, loopType);
 
                 while (endTime < Time.time)
                 {
@@ -179,7 +232,7 @@ namespace Numba.Tweening
             while (Time.time < endTime)
             {
                 await new WaitForUpdate();
-                SetTime((Mathf.Min(Time.time, endTime) - startTime) / duration, ease, loopsCount, loopType);
+                SetTime((Mathf.Min(Time.time, endTime) - startTime) / duration, usedEaseType, ease, curve, loopsCount, loopType);
 
                 if (_stopRequested)
                 {

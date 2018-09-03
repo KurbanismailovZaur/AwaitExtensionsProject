@@ -9,9 +9,13 @@ namespace Numba.Tweening.Tweaks
 {
     public abstract class Tweak
     {
-        public abstract void SetTime(float normalizedPassedTime, Ease ease);
+        public abstract void SetTime(float normalizedTime, Ease ease);
 
-        public abstract void SetTimeBackward(float normalizedPassedTime, Ease ease);
+        public abstract void SetTime(float normalizedTime, AnimationCurve curve);
+
+        public abstract void SetTimeBackward(float normalizedTime, Ease ease);
+
+        public abstract void SetTimeBackward(float normalizedTime, AnimationCurve curve);
 
         public abstract void Increment();
     }
@@ -19,9 +23,9 @@ namespace Numba.Tweening.Tweaks
     public abstract class Tweak<T> : Tweak
 	{
         #region Properties
-        public T From { get; set; }
+        public T From { get; protected set; }
 
-        public T To { get; set; }
+        public T To { get; protected set; }
 
         protected Action<T> _setter;
         #endregion
@@ -47,18 +51,32 @@ namespace Numba.Tweening.Tweaks
             _setter?.Invoke(value);
         }
 
-        protected abstract T Evaluate(float normalizedPassedTime, Ease ease);
+        protected abstract T Evaluate(float normalizedTime, Ease ease);
 
-        protected abstract T EvaluateBackward(float normalizedPassedTime, Ease ease);
+        protected abstract T Evaluate(float normalizedTime, AnimationCurve curve);
 
-        public sealed override void SetTime(float normalizedPassedTime, Ease ease)
+        protected abstract T EvaluateBackward(float normalizedTime, Ease ease);
+
+        protected abstract T EvaluateBackward(float normalizedTime, AnimationCurve curve);
+
+        public sealed override void SetTime(float normalizedTime, Ease ease)
         {
-            CallSetter(Evaluate(normalizedPassedTime, ease));
+            CallSetter(Evaluate(normalizedTime, ease));
         }
 
-        public sealed override void SetTimeBackward(float normalizedPassedTime, Ease ease)
+        public override void SetTime(float normalizedTime, AnimationCurve curve)
         {
-            CallSetter(EvaluateBackward(normalizedPassedTime, ease));
+            CallSetter(Evaluate(normalizedTime, curve));
+        }
+
+        public sealed override void SetTimeBackward(float normalizedTime, Ease ease)
+        {
+            CallSetter(EvaluateBackward(normalizedTime, ease));
+        }
+
+        public sealed override void SetTimeBackward(float normalizedTime, AnimationCurve curve)
+        {
+            CallSetter(EvaluateBackward(normalizedTime, curve));
         }
     }
 }

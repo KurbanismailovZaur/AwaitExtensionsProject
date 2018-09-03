@@ -25,5 +25,9 @@ namespace Numba.Tweening.Tweaks
         protected override Color32 Evaluate(float normalizedPassedTime, Ease ease) => (Color)Easing.Ease((Color)From, (Color)To, normalizedPassedTime, ease);
 
         protected override Color32 EvaluateBackward(float normalizedPassedTime, Ease ease) => (Color)Easing.Ease((Color)To, (Color)From, normalizedPassedTime, ease);
+
+        protected override Color32 Evaluate(float normalizedTime, AnimationCurve curve) => Easing.Ease(From, To, normalizedTime, curve);
+
+        protected override Color32 EvaluateBackward(float normalizedTime, AnimationCurve curve) => Easing.Ease(To, From, normalizedTime, curve);
     }
 }
