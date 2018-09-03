@@ -160,6 +160,126 @@ namespace Numba.Tweening
             }
         }
 
+        public static Vector2 Ease(Vector2 from, Vector2 to, float normalizedPassedTime, Ease ease)
+        {
+            switch (ease)
+            {
+                case Tweening.Ease.Linear: return Linear(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuad: return QuadraticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuad: return QuadraticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuad: return QuadraticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCubic: return CubicInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCubic: return CubicOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCubic: return CubicInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuart: return QuarticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuart: return QuarticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuart: return QuarticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuint: return QuinticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuint: return QuinticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuint: return QuinticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InSine: return SinusoidalInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutSine: return SinusoidalOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutSine: return SinusoidalInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InExpo: return ExponentialInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutExpo: return ExponentialOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutExpo: return ExponentialInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCirc: return CircularInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCirc: return CircularOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCirc: return CircularInOutEase(from, to, normalizedPassedTime);
+                default: return Vector2.zero;
+            }
+        }
+
+        public static Vector3 Ease(Vector3 from, Vector3 to, float normalizedPassedTime, Ease ease)
+        {
+            switch (ease)
+            {
+                case Tweening.Ease.Linear: return Linear(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuad: return QuadraticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuad: return QuadraticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuad: return QuadraticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCubic: return CubicInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCubic: return CubicOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCubic: return CubicInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuart: return QuarticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuart: return QuarticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuart: return QuarticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuint: return QuinticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuint: return QuinticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuint: return QuinticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InSine: return SinusoidalInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutSine: return SinusoidalOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutSine: return SinusoidalInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InExpo: return ExponentialInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutExpo: return ExponentialOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutExpo: return ExponentialInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCirc: return CircularInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCirc: return CircularOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCirc: return CircularInOutEase(from, to, normalizedPassedTime);
+                default: return Vector3.zero;
+            }
+        }
+
+        public static Vector4 Ease(Vector4 from, Vector4 to, float normalizedPassedTime, Ease ease)
+        {
+            switch (ease)
+            {
+                case Tweening.Ease.Linear: return Linear(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuad: return QuadraticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuad: return QuadraticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuad: return QuadraticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCubic: return CubicInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCubic: return CubicOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCubic: return CubicInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuart: return QuarticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuart: return QuarticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuart: return QuarticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuint: return QuinticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuint: return QuinticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuint: return QuinticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InSine: return SinusoidalInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutSine: return SinusoidalOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutSine: return SinusoidalInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InExpo: return ExponentialInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutExpo: return ExponentialOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutExpo: return ExponentialInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCirc: return CircularInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCirc: return CircularOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCirc: return CircularInOutEase(from, to, normalizedPassedTime);
+                default: return Vector4.zero;
+            }
+        }
+
+        public static Quaternion Ease(Quaternion from, Quaternion to, float normalizedPassedTime, Ease ease)
+        {
+            switch (ease)
+            {
+                case Tweening.Ease.Linear: return Linear(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuad: return QuadraticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuad: return QuadraticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuad: return QuadraticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCubic: return CubicInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCubic: return CubicOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCubic: return CubicInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuart: return QuarticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuart: return QuarticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuart: return QuarticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InQuint: return QuinticInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutQuint: return QuinticOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutQuint: return QuinticInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InSine: return SinusoidalInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutSine: return SinusoidalOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutSine: return SinusoidalInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InExpo: return ExponentialInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutExpo: return ExponentialOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutExpo: return ExponentialInOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InCirc: return CircularInEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.OutCirc: return CircularOutEase(from, to, normalizedPassedTime);
+                case Tweening.Ease.InOutCirc: return CircularInOutEase(from, to, normalizedPassedTime);
+                default: return Quaternion.identity;
+            }
+        }
+
         #region Ease formulas
         #region Linear
         public static int Linear(int from, int to, float normalizedPassedTime)
@@ -205,6 +325,26 @@ namespace Numba.Tweening
         public static DateTime Linear(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(Linear(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 Linear(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(Linear(from.x, to.x, normalizedPassedTime), Linear(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 Linear(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(Linear(from.x, to.x, normalizedPassedTime), Linear(from.y, to.y, normalizedPassedTime), Linear(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 Linear(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(Linear(from.x, to.x, normalizedPassedTime), Linear(from.y, to.y, normalizedPassedTime), Linear(from.z, to.z, normalizedPassedTime), Linear(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion Linear(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, normalizedPassedTime);
         }
         #endregion
 
@@ -254,6 +394,26 @@ namespace Numba.Tweening
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuadraticInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
+
+        public static Vector2 QuadraticInEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(QuadraticInEase(from.x, to.x, normalizedPassedTime), QuadraticInEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 QuadraticInEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(QuadraticInEase(from.x, to.x, normalizedPassedTime), QuadraticInEase(from.y, to.y, normalizedPassedTime), QuadraticInEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 QuadraticInEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(QuadraticInEase(from.x, to.x, normalizedPassedTime), QuadraticInEase(from.y, to.y, normalizedPassedTime), QuadraticInEase(from.z, to.z, normalizedPassedTime), QuadraticInEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion QuadraticInEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, QuadraticInEase(0f, 1f, normalizedPassedTime));
+        }
         #endregion
 
         #region Out
@@ -300,6 +460,26 @@ namespace Numba.Tweening
         public static DateTime QuadraticOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuadraticOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 QuadraticOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(QuadraticOutEase(from.x, to.x, normalizedPassedTime), QuadraticOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 QuadraticOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(QuadraticOutEase(from.x, to.x, normalizedPassedTime), QuadraticOutEase(from.y, to.y, normalizedPassedTime), QuadraticOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 QuadraticOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(QuadraticOutEase(from.x, to.x, normalizedPassedTime), QuadraticOutEase(from.y, to.y, normalizedPassedTime), QuadraticOutEase(from.z, to.z, normalizedPassedTime), QuadraticOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion QuadraticOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, QuadraticOutEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -360,6 +540,26 @@ namespace Numba.Tweening
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuadraticInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
+
+        public static Vector2 QuadraticInOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(QuadraticInOutEase(from.x, to.x, normalizedPassedTime), QuadraticInOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 QuadraticInOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(QuadraticInOutEase(from.x, to.x, normalizedPassedTime), QuadraticInOutEase(from.y, to.y, normalizedPassedTime), QuadraticInOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 QuadraticInOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(QuadraticInOutEase(from.x, to.x, normalizedPassedTime), QuadraticInOutEase(from.y, to.y, normalizedPassedTime), QuadraticInOutEase(from.z, to.z, normalizedPassedTime), QuadraticInOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion QuadraticInOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, QuadraticInOutEase(0f, 1f, normalizedPassedTime));
+        }
         #endregion
         #endregion
 
@@ -408,6 +608,26 @@ namespace Numba.Tweening
         public static DateTime CubicInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(CubicInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 CubicInEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(CubicInEase(from.x, to.x, normalizedPassedTime), CubicInEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 CubicInEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(CubicInEase(from.x, to.x, normalizedPassedTime), CubicInEase(from.y, to.y, normalizedPassedTime), CubicInEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 CubicInEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(CubicInEase(from.x, to.x, normalizedPassedTime), CubicInEase(from.y, to.y, normalizedPassedTime), CubicInEase(from.z, to.z, normalizedPassedTime), CubicInEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion CubicInEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, CubicInEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -459,6 +679,26 @@ namespace Numba.Tweening
         public static DateTime CubicOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(CubicOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 CubicOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(CubicOutEase(from.x, to.x, normalizedPassedTime), CubicOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 CubicOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(CubicOutEase(from.x, to.x, normalizedPassedTime), CubicOutEase(from.y, to.y, normalizedPassedTime), CubicOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 CubicOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(CubicOutEase(from.x, to.x, normalizedPassedTime), CubicOutEase(from.y, to.y, normalizedPassedTime), CubicOutEase(from.z, to.z, normalizedPassedTime), CubicOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion CubicOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, CubicOutEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -519,6 +759,26 @@ namespace Numba.Tweening
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(CubicInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
+
+        public static Vector2 CubicInOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(CubicInOutEase(from.x, to.x, normalizedPassedTime), CubicInOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 CubicInOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(CubicInOutEase(from.x, to.x, normalizedPassedTime), CubicInOutEase(from.y, to.y, normalizedPassedTime), CubicInOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 CubicInOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(CubicInOutEase(from.x, to.x, normalizedPassedTime), CubicInOutEase(from.y, to.y, normalizedPassedTime), CubicInOutEase(from.z, to.z, normalizedPassedTime), CubicInOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion CubicInOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, CubicInOutEase(0f, 1f, normalizedPassedTime));
+        }
         #endregion
         #endregion
 
@@ -567,6 +827,26 @@ namespace Numba.Tweening
         public static DateTime QuarticInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuarticInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 QuarticInEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(QuarticInEase(from.x, to.x, normalizedPassedTime), QuarticInEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 QuarticInEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(QuarticInEase(from.x, to.x, normalizedPassedTime), QuarticInEase(from.y, to.y, normalizedPassedTime), QuarticInEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 QuarticInEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(QuarticInEase(from.x, to.x, normalizedPassedTime), QuarticInEase(from.y, to.y, normalizedPassedTime), QuarticInEase(from.z, to.z, normalizedPassedTime), QuarticInEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion QuarticInEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, QuarticInEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -618,6 +898,26 @@ namespace Numba.Tweening
         public static DateTime QuarticOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuarticOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 QuarticOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(QuarticOutEase(from.x, to.x, normalizedPassedTime), QuarticOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 QuarticOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(QuarticOutEase(from.x, to.x, normalizedPassedTime), QuarticOutEase(from.y, to.y, normalizedPassedTime), QuarticOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 QuarticOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(QuarticOutEase(from.x, to.x, normalizedPassedTime), QuarticOutEase(from.y, to.y, normalizedPassedTime), QuarticOutEase(from.z, to.z, normalizedPassedTime), QuarticOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion QuarticOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, QuarticOutEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -678,6 +978,26 @@ namespace Numba.Tweening
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuarticInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
+
+        public static Vector2 QuarticInOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(QuarticInOutEase(from.x, to.x, normalizedPassedTime), QuarticInOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 QuarticInOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(QuarticInOutEase(from.x, to.x, normalizedPassedTime), QuarticInOutEase(from.y, to.y, normalizedPassedTime), QuarticInOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 QuarticInOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(QuarticInOutEase(from.x, to.x, normalizedPassedTime), QuarticInOutEase(from.y, to.y, normalizedPassedTime), QuarticInOutEase(from.z, to.z, normalizedPassedTime), QuarticInOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion QuarticInOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, QuarticInOutEase(0f, 1f, normalizedPassedTime));
+        }
         #endregion
         #endregion
 
@@ -726,6 +1046,26 @@ namespace Numba.Tweening
         public static DateTime QuinticInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuinticInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 QuinticInEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(QuinticInEase(from.x, to.x, normalizedPassedTime), QuinticInEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 QuinticInEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(QuinticInEase(from.x, to.x, normalizedPassedTime), QuinticInEase(from.y, to.y, normalizedPassedTime), QuinticInEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 QuinticInEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(QuinticInEase(from.x, to.x, normalizedPassedTime), QuinticInEase(from.y, to.y, normalizedPassedTime), QuinticInEase(from.z, to.z, normalizedPassedTime), QuinticInEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion QuinticInEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, QuinticInEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -777,6 +1117,26 @@ namespace Numba.Tweening
         public static DateTime QuinticOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuinticOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 QuinticOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(QuinticOutEase(from.x, to.x, normalizedPassedTime), QuinticOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 QuinticOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(QuinticOutEase(from.x, to.x, normalizedPassedTime), QuinticOutEase(from.y, to.y, normalizedPassedTime), QuinticOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 QuinticOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(QuinticOutEase(from.x, to.x, normalizedPassedTime), QuinticOutEase(from.y, to.y, normalizedPassedTime), QuinticOutEase(from.z, to.z, normalizedPassedTime), QuinticOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion QuinticOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, QuinticOutEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -837,6 +1197,26 @@ namespace Numba.Tweening
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuinticInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
+
+        public static Vector2 QuinticInOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(QuinticInOutEase(from.x, to.x, normalizedPassedTime), QuinticInOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 QuinticInOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(QuinticInOutEase(from.x, to.x, normalizedPassedTime), QuinticInOutEase(from.y, to.y, normalizedPassedTime), QuinticInOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 QuinticInOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(QuinticInOutEase(from.x, to.x, normalizedPassedTime), QuinticInOutEase(from.y, to.y, normalizedPassedTime), QuinticInOutEase(from.z, to.z, normalizedPassedTime), QuinticInOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion QuinticInOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, QuinticInOutEase(0f, 1f, normalizedPassedTime));
+        }
         #endregion
         #endregion
 
@@ -894,6 +1274,26 @@ namespace Numba.Tweening
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(SinusoidalInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
+
+        public static Vector2 SinusoidalInEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(SinusoidalInEase(from.x, to.x, normalizedPassedTime), SinusoidalInEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 SinusoidalInEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(SinusoidalInEase(from.x, to.x, normalizedPassedTime), SinusoidalInEase(from.y, to.y, normalizedPassedTime), SinusoidalInEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 SinusoidalInEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(SinusoidalInEase(from.x, to.x, normalizedPassedTime), SinusoidalInEase(from.y, to.y, normalizedPassedTime), SinusoidalInEase(from.z, to.z, normalizedPassedTime), SinusoidalInEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion SinusoidalInEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, SinusoidalInEase(0f, 1f, normalizedPassedTime));
+        }
         #endregion
 
         #region Out
@@ -941,6 +1341,26 @@ namespace Numba.Tweening
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(SinusoidalOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
+
+        public static Vector2 SinusoidalOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(SinusoidalOutEase(from.x, to.x, normalizedPassedTime), SinusoidalOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 SinusoidalOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(SinusoidalOutEase(from.x, to.x, normalizedPassedTime), SinusoidalOutEase(from.y, to.y, normalizedPassedTime), SinusoidalOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 SinusoidalOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(SinusoidalOutEase(from.x, to.x, normalizedPassedTime), SinusoidalOutEase(from.y, to.y, normalizedPassedTime), SinusoidalOutEase(from.z, to.z, normalizedPassedTime), SinusoidalOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion SinusoidalOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, SinusoidalOutEase(0f, 1f, normalizedPassedTime));
+        }
         #endregion
 
         #region InOut
@@ -987,6 +1407,26 @@ namespace Numba.Tweening
         public static DateTime SinusoidalInOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(SinusoidalInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 SinusoidalInOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(SinusoidalInOutEase(from.x, to.x, normalizedPassedTime), SinusoidalInOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 SinusoidalInOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(SinusoidalInOutEase(from.x, to.x, normalizedPassedTime), SinusoidalInOutEase(from.y, to.y, normalizedPassedTime), SinusoidalInOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 SinusoidalInOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(SinusoidalInOutEase(from.x, to.x, normalizedPassedTime), SinusoidalInOutEase(from.y, to.y, normalizedPassedTime), SinusoidalInOutEase(from.z, to.z, normalizedPassedTime), SinusoidalInOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion SinusoidalInOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, SinusoidalInOutEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
         #endregion
@@ -1037,6 +1477,26 @@ namespace Numba.Tweening
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(ExponentialInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
+
+        public static Vector2 ExponentialInEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(ExponentialInEase(from.x, to.x, normalizedPassedTime), ExponentialInEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 ExponentialInEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(ExponentialInEase(from.x, to.x, normalizedPassedTime), ExponentialInEase(from.y, to.y, normalizedPassedTime), ExponentialInEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 ExponentialInEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(ExponentialInEase(from.x, to.x, normalizedPassedTime), ExponentialInEase(from.y, to.y, normalizedPassedTime), ExponentialInEase(from.z, to.z, normalizedPassedTime), ExponentialInEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion ExponentialInEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, ExponentialInEase(0f, 1f, normalizedPassedTime));
+        }
         #endregion
 
         #region Out
@@ -1083,6 +1543,26 @@ namespace Numba.Tweening
         public static DateTime ExponentialOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(ExponentialOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 ExponentialOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(ExponentialOutEase(from.x, to.x, normalizedPassedTime), ExponentialOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 ExponentialOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(ExponentialOutEase(from.x, to.x, normalizedPassedTime), ExponentialOutEase(from.y, to.y, normalizedPassedTime), ExponentialOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 ExponentialOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(ExponentialOutEase(from.x, to.x, normalizedPassedTime), ExponentialOutEase(from.y, to.y, normalizedPassedTime), ExponentialOutEase(from.z, to.z, normalizedPassedTime), ExponentialOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion ExponentialOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, ExponentialOutEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -1143,6 +1623,26 @@ namespace Numba.Tweening
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(ExponentialInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
+
+        public static Vector2 ExponentialInOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(ExponentialInOutEase(from.x, to.x, normalizedPassedTime), ExponentialInOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 ExponentialInOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(ExponentialInOutEase(from.x, to.x, normalizedPassedTime), ExponentialInOutEase(from.y, to.y, normalizedPassedTime), ExponentialInOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 ExponentialInOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(ExponentialInOutEase(from.x, to.x, normalizedPassedTime), ExponentialInOutEase(from.y, to.y, normalizedPassedTime), ExponentialInOutEase(from.z, to.z, normalizedPassedTime), ExponentialInOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion ExponentialInOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, ExponentialInOutEase(0f, 1f, normalizedPassedTime));
+        }
         #endregion
         #endregion
 
@@ -1191,6 +1691,26 @@ namespace Numba.Tweening
         public static DateTime CircularInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(CircularInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 CircularInEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(CircularInEase(from.x, to.x, normalizedPassedTime), CircularInEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 CircularInEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(CircularInEase(from.x, to.x, normalizedPassedTime), CircularInEase(from.y, to.y, normalizedPassedTime), CircularInEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 CircularInEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(CircularInEase(from.x, to.x, normalizedPassedTime), CircularInEase(from.y, to.y, normalizedPassedTime), CircularInEase(from.z, to.z, normalizedPassedTime), CircularInEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion CircularInEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, CircularInEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -1242,6 +1762,26 @@ namespace Numba.Tweening
         public static DateTime CircularOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(CircularOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 CircularOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(CircularOutEase(from.x, to.x, normalizedPassedTime), CircularOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 CircularOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(CircularOutEase(from.x, to.x, normalizedPassedTime), CircularOutEase(from.y, to.y, normalizedPassedTime), CircularOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 CircularOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(CircularOutEase(from.x, to.x, normalizedPassedTime), CircularOutEase(from.y, to.y, normalizedPassedTime), CircularOutEase(from.z, to.z, normalizedPassedTime), CircularOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion CircularOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, CircularOutEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
 
@@ -1301,6 +1841,26 @@ namespace Numba.Tweening
         public static DateTime CircularInOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(CircularInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
+        }
+
+        public static Vector2 CircularInOutEase(Vector2 from, Vector2 to, float normalizedPassedTime)
+        {
+            return new Vector2(CircularInOutEase(from.x, to.x, normalizedPassedTime), CircularInOutEase(from.y, to.y, normalizedPassedTime));
+        }
+
+        public static Vector3 CircularInOutEase(Vector3 from, Vector3 to, float normalizedPassedTime)
+        {
+            return new Vector3(CircularInOutEase(from.x, to.x, normalizedPassedTime), CircularInOutEase(from.y, to.y, normalizedPassedTime), CircularInOutEase(from.z, to.z, normalizedPassedTime));
+        }
+
+        public static Vector4 CircularInOutEase(Vector4 from, Vector4 to, float normalizedPassedTime)
+        {
+            return new Vector4(CircularInOutEase(from.x, to.x, normalizedPassedTime), CircularInOutEase(from.y, to.y, normalizedPassedTime), CircularInOutEase(from.z, to.z, normalizedPassedTime), CircularInOutEase(from.w, to.w, normalizedPassedTime));
+        }
+
+        public static Quaternion CircularInOutEase(Quaternion from, Quaternion to, float normalizedPassedTime)
+        {
+            return Quaternion.Lerp(from, to, CircularInOutEase(0f, 1f, normalizedPassedTime));
         }
         #endregion
         #endregion

@@ -33,9 +33,7 @@ namespace Numba
 
         private async void Awake()
         {
-
-
-            await new Tween(new TweakVector2(Vector2.zero, Vector2.one, (v2) => _text.text = v2.ToString("0000.0000")), 4f).SetEase(Ease.Linear).SetLoops(2, LoopType.ReversedYoyo).PlayAsync();
+            await new Tween(new TweakQuaternion(Quaternion.identity, Quaternion.Euler(0f, 90f, 0f), (q) => _cube.localRotation = q), 1f).SetEase(Ease.InOutExpo).SetLoops(2, LoopType.ReversedYoyo).PlayAsync();
             //await new Tween(new TweakFloat(0f, 1f, (v2) => _text.text = v2.ToString()), 4f).SetEase(Ease.OutExpo).SetLoops(3, LoopType.Backward).PlayAsync();
 
             //await new Tween(new TweakDateTime(new DateTime(), DateTime.Now, (dt) => Log(dt)), 1f).PlayAsync();
