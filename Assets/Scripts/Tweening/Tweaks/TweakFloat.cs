@@ -9,8 +9,8 @@ using System;
 
 namespace Numba.Tweening.Tweaks
 {
-	public sealed class TweakFloat : Tweak<float> 
-	{
+    public sealed class TweakFloat : Tweak<float>
+    {
         private TweakFloat() { }
 
         public TweakFloat(float from, float to, Action<float> setter) : base(from, to, setter) { }
@@ -22,8 +22,11 @@ namespace Numba.Tweening.Tweaks
             To = To + change;
         }
 
-        protected override float Evaluate(float normalizedPassedTime, Ease ease) => Easing.Ease(From, To, normalizedPassedTime, ease);
+        protected override float Evaluate(float normalizedPassedTime, Ease ease)
+        {
+            Log("EVALUATE"); return Easing.Ease(From, To, normalizedPassedTime, ease);
+        }
 
-        protected override float EvaluateBackward(float normalizedPassedTime, Ease ease) => Easing.Ease(To, From, normalizedPassedTime, ease);
+        protected override float EvaluateBackward(float normalizedPassedTime, Ease ease) { Log(normalizedPassedTime); return Easing.Ease(To, From, normalizedPassedTime, ease);}
     }
 }

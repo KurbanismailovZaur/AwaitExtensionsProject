@@ -57,7 +57,7 @@ namespace Numba.Tweening.Tweaks
 
         public sealed override void SetTimeBackward(float normalizedPassedTime, Ease ease)
         {
-            CallSetter(Evaluate(normalizedPassedTime, ease));
+            CallSetter(EvaluateBackward(normalizedPassedTime, ease));
         }
     }
 }

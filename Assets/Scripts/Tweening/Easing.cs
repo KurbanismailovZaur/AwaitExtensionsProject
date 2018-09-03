@@ -204,12 +204,7 @@ namespace Numba.Tweening
 
         public static DateTime Linear(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-            
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * t));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(Linear(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -257,12 +252,7 @@ namespace Numba.Tweening
 
         public static DateTime QuadraticInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * t * t));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuadraticInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -309,12 +299,7 @@ namespace Numba.Tweening
 
         public static DateTime QuadraticOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes(-(to - from).TotalMinutes * t * (t - 2)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuadraticOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -373,15 +358,7 @@ namespace Numba.Tweening
 
         public static DateTime QuadraticInOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            t /= .5f;
-            if (t < 1) return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes / 2 * t * t));
-            --t;
-            return from.Add(TimeSpan.FromMinutes(-(to - from).TotalMinutes / 2 * (t * (t - 2) - 1)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuadraticInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
         #endregion
@@ -430,12 +407,7 @@ namespace Numba.Tweening
 
         public static DateTime CubicInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * t * t * t));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(CubicInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -486,13 +458,7 @@ namespace Numba.Tweening
 
         public static DateTime CubicOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            --t;
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * (t * t * t + 1)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(CubicOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -551,15 +517,7 @@ namespace Numba.Tweening
 
         public static DateTime CubicInOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            t /= .5f;
-            if (t < 1) return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes / 2 * t * t * t));
-            t -= 2;
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes / 2 * (t * t * t + 2)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(CubicInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
         #endregion
@@ -608,12 +566,7 @@ namespace Numba.Tweening
 
         public static DateTime QuarticInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * t * t * t * t));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuarticInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -664,13 +617,7 @@ namespace Numba.Tweening
 
         public static DateTime QuarticOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            --t;
-            return from.Add(TimeSpan.FromMinutes(-(to - from).TotalMinutes * (t * t * t * t - 1)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuarticOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -729,15 +676,7 @@ namespace Numba.Tweening
 
         public static DateTime QuarticInOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            t /= .5f;
-            if (t < 1) return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes / 2 * t * t * t * t));
-            t -= 2;
-            return from.Add(TimeSpan.FromMinutes(-(to - from).TotalMinutes / 2 * (t * t * t * t - 2)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuarticInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
         #endregion
@@ -786,12 +725,7 @@ namespace Numba.Tweening
 
         public static DateTime QuinticInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * t * t * t * t * t));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuinticInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -842,13 +776,7 @@ namespace Numba.Tweening
 
         public static DateTime QuinticOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            --t;
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * (t * t * t * t * t + 1)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuinticOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -907,15 +835,7 @@ namespace Numba.Tweening
 
         public static DateTime QuinticInOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            t /= .5f;
-            if (t < 1) return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes / 2 * t * t * t * t * t));
-            t -= 2;
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes / 2 * (t * t * t * t * t + 2)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(QuinticInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
         #endregion
@@ -972,14 +892,7 @@ namespace Numba.Tweening
 
         public static DateTime SinusoidalInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            TimeSpan c = to - from;
-
-            return from.Add(TimeSpan.FromMinutes(-c.TotalMinutes * Cos(t * (PI / 2)) + c.TotalMinutes));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(SinusoidalInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -1026,12 +939,7 @@ namespace Numba.Tweening
 
         public static DateTime SinusoidalOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * Sin(t * (PI / 2))));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(SinusoidalOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -1078,12 +986,7 @@ namespace Numba.Tweening
 
         public static DateTime SinusoidalInOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes(-(to - from).TotalMinutes / 2 * (Cos(PI * t) - 1)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(SinusoidalInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
         #endregion
@@ -1132,12 +1035,7 @@ namespace Numba.Tweening
 
         public static DateTime ExponentialInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * Pow(2, 10 * (t - 1))));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(ExponentialInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -1184,12 +1082,7 @@ namespace Numba.Tweening
 
         public static DateTime ExponentialOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * (-Pow(2, -10 * t) + 1)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(ExponentialOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -1248,15 +1141,7 @@ namespace Numba.Tweening
 
         public static DateTime ExponentialInOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            t /= .5f;
-            if (t < 1) return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes / 2 * Pow(2, 10 * (t - 1))));
-            --t;
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes / 2 * (-Pow(2, -10 * t) + 2)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(ExponentialInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
         #endregion
@@ -1305,12 +1190,7 @@ namespace Numba.Tweening
 
         public static DateTime CircularInEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            return from.Add(TimeSpan.FromMinutes(-(to - from).TotalMinutes * (Sqrt(1 - t * t) - 1)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(CircularInEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -1361,13 +1241,7 @@ namespace Numba.Tweening
 
         public static DateTime CircularOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            --t;
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes * Sqrt(1 - t * t)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(CircularOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
 
@@ -1426,15 +1300,7 @@ namespace Numba.Tweening
 
         public static DateTime CircularInOutEase(DateTime from, DateTime to, float normalizedPassedTime)
         {
-            float t = normalizedPassedTime;
-
-            if (t == 0f) return from;
-            if (t == 1f) return to;
-
-            t /= .5f;
-            if (t < 1) return from.Add(TimeSpan.FromMinutes(-(to - from).TotalMinutes / 2 * (Sqrt(1 - t * t) - 1)));
-            t -= 2;
-            return from.Add(TimeSpan.FromMinutes((to - from).TotalMinutes / 2 * (Sqrt(1 - t * t) + 1)));
+            return DateTime.MinValue.Add(TimeSpan.FromMinutes(CircularInOutEase(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, normalizedPassedTime)));
         }
         #endregion
         #endregion

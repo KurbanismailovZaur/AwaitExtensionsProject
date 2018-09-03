@@ -99,8 +99,16 @@ namespace Numba.Tweening
                 case LoopType.Yoyo:
                     normalizedPassedTime = normalizedPassedTime * loopsCount * 2;
 
-                    if (IsYoyoBackward(normalizedPassedTime)) Tweak.SetTimeBackward(Wrap01(normalizedPassedTime), ease);
-                    else Tweak.SetTime(Wrap01(normalizedPassedTime), ease);
+                    if (IsYoyoBackward(normalizedPassedTime))
+                    {
+                        Log("BACKWARD");
+                        Tweak.SetTimeBackward(Wrap01(normalizedPassedTime), ease);
+                    }
+                    else
+                    {
+                        Log("FORWARD");
+                        Tweak.SetTime(Wrap01(normalizedPassedTime), ease);
+                    }
                     break;
                 case LoopType.ReversedYoyo:
                     float scaledTime = normalizedPassedTime * loopsCount * 2;
