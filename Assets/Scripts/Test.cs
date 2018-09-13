@@ -29,7 +29,9 @@ namespace Numba
 
         private async void Awake()
         {
-            await new Tween(new TweakColor(Color.black, Color.white, (c) => _cube.GetComponent<MeshRenderer>().material.color = c), 1f).SetEase(_curve).SetLoops(1, LoopType.ReversedYoyo).PlayAsync();
+            await _cube.DoMove(1f, 0f, 0f, 1).SetEase(_curve).SetLoops(1, LoopType.Reversed).PlayAsync();
+            //await new Tween(new TweakVec(Color.black, Color.white, (c) => _cube.GetComponent<MeshRenderer>().material.color = c), 1f).SetEase(_curve).SetLoops(1, LoopType.ReversedYoyo).PlayAsync();
+            Log("Awaked");
         }
 
         private void Update()

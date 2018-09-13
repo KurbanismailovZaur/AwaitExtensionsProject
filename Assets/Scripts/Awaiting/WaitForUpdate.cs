@@ -9,7 +9,8 @@ using System.Threading;
 using Numba.Awaiting.Engine;
 
 /// <summary>
-/// This class allows run code after awaiting in update cycle from main thread.
+/// This class can be awaited.
+/// Run code after awaiting in update cycle from main thread.
 /// </summary>
 public class WaitForUpdate
 {

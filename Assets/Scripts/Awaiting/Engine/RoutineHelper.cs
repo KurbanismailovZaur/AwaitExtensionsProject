@@ -12,6 +12,11 @@ namespace Numba.Awaiting.Engine
     /// </summary>
     public class RoutineHelper : MonoBehaviour
     {
+        /// <summary>
+        /// Return instance of this class (singleton pattern).
+        /// Returned object will not be visualized in hierarchy and
+        /// not be destroyed between scenes loading.
+        /// </summary>
         public static RoutineHelper Instance { get; private set; }
 
         /// <summary>
@@ -26,11 +31,5 @@ namespace Numba.Awaiting.Engine
 
             DontDestroyOnLoad(Instance.gameObject);
         }
-
-        //public new void StartCoroutine(IEnumerator enumerator)
-        //{
-        //    if (ContextHelper.IsMainThread) base.StartCoroutine(enumerator);
-        //    else ContextHelper.UnitySynchronizationContext.Post(s => base.StartCoroutine(enumerator), null);
-        //}
     }
 }

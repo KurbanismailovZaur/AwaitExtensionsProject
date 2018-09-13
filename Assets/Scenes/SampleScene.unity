@@ -230,31 +230,76 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 3.1690352
-      outSlope: 0.3336742
-      tangentMode: 65
+      time: 0.00078502233
+      value: 0.0013821516
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.041237112
+      outWeight: 1
     - serializedVersion: 3
-      time: 0.74959934
-      value: 0.25012195
-      inSlope: 0.3336742
-      outSlope: 2.9947128
-      tangentMode: 69
+      time: 0.10194758
+      value: 0.12230287
+      inSlope: -0.035908263
+      outSlope: -0.035908263
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.11721566
+      outWeight: 0.091035806
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2.9947128
-      outSlope: 0
-      tangentMode: 5
+      time: 0.19436929
+      value: 0.007590122
+      inSlope: -0.030800162
+      outSlope: -0.030800162
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.1372632
+    - serializedVersion: 3
+      time: 0.33655697
+      value: 0.24328516
+      inSlope: 0.08152971
+      outSlope: 0.08152971
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.15057236
+    - serializedVersion: 3
+      time: 0.47603223
+      value: 0.012645809
+      inSlope: -0.00032423262
+      outSlope: -0.00032423262
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.15767409
+    - serializedVersion: 3
+      time: 0.6551844
+      value: 0.45766136
+      inSlope: -8.824224
+      outSlope: -8.824224
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.22597973
+      outWeight: 0.26070333
+    - serializedVersion: 3
+      time: 0.80194575
+      value: 0.024032513
+      inSlope: 0.028484646
+      outSlope: 0.028484646
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.4169338
+    - serializedVersion: 3
+      time: 0.9993148
+      value: 0.9986288
+      inSlope: 0.013248873
+      outSlope: 0.013248873
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
