@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-using static UnityEngine.Debug;
 
-namespace Numba.Awaiting.Engine
+namespace Numba.Tweening.Engine
 {
     /// <summary>
     /// Help run coroutines. 
@@ -26,8 +24,8 @@ namespace Numba.Awaiting.Engine
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void CreateInstance()
         {
-            Instance = new GameObject("RoutineHelper(Await)").AddComponent<RoutineHelper>();
-            Instance.gameObject.hideFlags = HideFlags.HideInHierarchy;
+            Instance = new GameObject("RoutineHelper(Tween)").AddComponent<RoutineHelper>();
+            //Instance.gameObject.hideFlags = HideFlags.HideInHierarchy;
 
             DontDestroyOnLoad(Instance.gameObject);
         }

@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-using static UnityEngine.Debug;
-using static UnityEngine.Mathf;
 using System;
 
 namespace Numba.Tweening
@@ -1669,7 +1666,7 @@ namespace Numba.Tweening
 
             float c = to - from;
 
-            return (int)(-c * Cos(t * (PI / 2)) + c + from);
+            return (int)(-c * Mathf.Cos(t * (Mathf.PI / 2)) + c + from);
         }
 
         public static long SinusoidalInEase(long from, long to, float normalizedTime)
@@ -1681,7 +1678,7 @@ namespace Numba.Tweening
 
             float c = to - from;
 
-            return (long)(-c * Cos(t * (PI / 2)) + c + from);
+            return (long)(-c * Mathf.Cos(t * (Mathf.PI / 2)) + c + from);
         }
 
         public static float SinusoidalInEase(float from, float to, float normalizedTime)
@@ -1693,7 +1690,7 @@ namespace Numba.Tweening
 
             float c = to - from;
 
-            return -c * Cos(t * (PI / 2)) + c + from;
+            return -c * Mathf.Cos(t * (Mathf.PI / 2)) + c + from;
         }
 
         public static double SinusoidalInEase(double from, double to, float normalizedTime)
@@ -1705,7 +1702,7 @@ namespace Numba.Tweening
 
             double c = to - from;
 
-            return -c * Cos(t * (PI / 2)) + c + from;
+            return -c * Mathf.Cos(t * (Mathf.PI / 2)) + c + from;
         }
 
         public static DateTime SinusoidalInEase(DateTime from, DateTime to, float normalizedTime)
@@ -1757,7 +1754,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (int)((to - from) * Sin(t * (PI / 2)) + from);
+            return (int)((to - from) * Mathf.Sin(t * (Mathf.PI / 2)) + from);
         }
 
         public static long SinusoidalOutEase(long from, long to, float normalizedTime)
@@ -1767,7 +1764,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (long)((to - from) * Sin(t * (PI / 2)) + from);
+            return (long)((to - from) * Mathf.Sin(t * (Mathf.PI / 2)) + from);
         }
 
         public static float SinusoidalOutEase(float from, float to, float normalizedTime)
@@ -1777,7 +1774,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (to - from) * Sin(t * (PI / 2)) + from;
+            return (to - from) * Mathf.Sin(t * (Mathf.PI / 2)) + from;
         }
 
         public static double SinusoidalOutEase(double from, double to, float normalizedTime)
@@ -1787,7 +1784,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (to - from) * Sin(t * (PI / 2)) + from;
+            return (to - from) * Mathf.Sin(t * (Mathf.PI / 2)) + from;
         }
 
         public static DateTime SinusoidalOutEase(DateTime from, DateTime to, float normalizedTime)
@@ -1839,7 +1836,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (int)(-(to - from) / 2 * (Cos(PI * t) - 1) + from);
+            return (int)(-(to - from) / 2 * (Mathf.Cos(Mathf.PI * t) - 1) + from);
         }
 
         public static long SinusoidalInOutEase(long from, long to, float normalizedTime)
@@ -1849,7 +1846,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (long)(-(to - from) / 2 * (Cos(PI * t) - 1) + from);
+            return (long)(-(to - from) / 2 * (Mathf.Cos(Mathf.PI * t) - 1) + from);
         }
 
         public static float SinusoidalInOutEase(float from, float to, float normalizedTime)
@@ -1859,7 +1856,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return -(to - from) / 2 * (Cos(PI * t) - 1) + from;
+            return -(to - from) / 2 * (Mathf.Cos(Mathf.PI * t) - 1) + from;
         }
 
         public static double SinusoidalInOutEase(double from, double to, float normalizedTime)
@@ -1869,7 +1866,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return -(to - from) / 2 * (Cos(PI * t) - 1) + from;
+            return -(to - from) / 2 * (Mathf.Cos(Mathf.PI * t) - 1) + from;
         }
 
         public static DateTime SinusoidalInOutEase(DateTime from, DateTime to, float normalizedTime)
@@ -1923,7 +1920,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (int)((to - from) * Pow(2, 10 * (t - 1)) + from);
+            return (int)((to - from) * Mathf.Pow(2, 10 * (t - 1)) + from);
         }
 
         public static long ExponentialInEase(long from, long to, float normalizedTime)
@@ -1933,7 +1930,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (long)((to - from) * Pow(2, 10 * (t - 1)) + from);
+            return (long)((to - from) * Mathf.Pow(2, 10 * (t - 1)) + from);
         }
 
         public static float ExponentialInEase(float from, float to, float normalizedTime)
@@ -1943,7 +1940,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (to - from) * Pow(2, 10 * (t - 1)) + from;
+            return (to - from) * Mathf.Pow(2, 10 * (t - 1)) + from;
         }
 
         public static double ExponentialInEase(double from, double to, float normalizedTime)
@@ -1953,7 +1950,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (to - from) * Pow(2, 10 * (t - 1)) + from;
+            return (to - from) * Mathf.Pow(2, 10 * (t - 1)) + from;
         }
 
         public static DateTime ExponentialInEase(DateTime from, DateTime to, float normalizedTime)
@@ -2005,7 +2002,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (int)((to - from) * (-Pow(2, -10 * t) + 1) + from);
+            return (int)((to - from) * (-Mathf.Pow(2, -10 * t) + 1) + from);
         }
 
         public static long ExponentialOutEase(long from, long to, float normalizedTime)
@@ -2015,7 +2012,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (long)((to - from) * (-Pow(2, -10 * t) + 1) + from);
+            return (long)((to - from) * (-Mathf.Pow(2, -10 * t) + 1) + from);
         }
 
         public static float ExponentialOutEase(float from, float to, float normalizedTime)
@@ -2025,7 +2022,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (to - from) * (-Pow(2, -10 * t) + 1) + from;
+            return (to - from) * (-Mathf.Pow(2, -10 * t) + 1) + from;
         }
 
         public static double ExponentialOutEase(double from, double to, float normalizedTime)
@@ -2035,7 +2032,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (to - from) * (-Pow(2, -10 * t) + 1) + from;
+            return (to - from) * (-Mathf.Pow(2, -10 * t) + 1) + from;
         }
 
         public static DateTime ExponentialOutEase(DateTime from, DateTime to, float normalizedTime)
@@ -2088,9 +2085,9 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             t /= .5f;
-            if (t < 1) return (int)((to - from) / 2 * Pow(2, 10 * (t - 1)) + from);
+            if (t < 1) return (int)((to - from) / 2 * Mathf.Pow(2, 10 * (t - 1)) + from);
             --t;
-            return (int)((to - from) / 2 * (-Pow(2, -10 * t) + 2) + from);
+            return (int)((to - from) / 2 * (-Mathf.Pow(2, -10 * t) + 2) + from);
         }
 
         public static long ExponentialInOutEase(long from, long to, float normalizedTime)
@@ -2101,9 +2098,9 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             t /= .5f;
-            if (t < 1) return (long)((to - from) / 2 * Pow(2, 10 * (t - 1)) + from);
+            if (t < 1) return (long)((to - from) / 2 * Mathf.Pow(2, 10 * (t - 1)) + from);
             --t;
-            return (long)((to - from) / 2 * (-Pow(2, -10 * t) + 2) + from);
+            return (long)((to - from) / 2 * (-Mathf.Pow(2, -10 * t) + 2) + from);
         }
 
         public static float ExponentialInOutEase(float from, float to, float normalizedTime)
@@ -2114,9 +2111,9 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             t /= .5f;
-            if (t < 1) return (to - from) / 2 * Pow(2, 10 * (t - 1)) + from;
+            if (t < 1) return (to - from) / 2 * Mathf.Pow(2, 10 * (t - 1)) + from;
             --t;
-            return (to - from) / 2 * (-Pow(2, -10 * t) + 2) + from;
+            return (to - from) / 2 * (-Mathf.Pow(2, -10 * t) + 2) + from;
         }
 
         public static double ExponentialInOutEase(double from, double to, float normalizedTime)
@@ -2127,9 +2124,9 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             t /= .5f;
-            if (t < 1) return (to - from) / 2 * Pow(2, 10 * (t - 1)) + from;
+            if (t < 1) return (to - from) / 2 * Mathf.Pow(2, 10 * (t - 1)) + from;
             --t;
-            return (to - from) / 2 * (-Pow(2, -10 * t) + 2) + from;
+            return (to - from) / 2 * (-Mathf.Pow(2, -10 * t) + 2) + from;
         }
 
         public static DateTime ExponentialInOutEase(DateTime from, DateTime to, float normalizedTime)
@@ -2183,7 +2180,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (int)(-(to - from) * (Sqrt(1 - t * t) - 1) + from);
+            return (int)(-(to - from) * (Mathf.Sqrt(1 - t * t) - 1) + from);
         }
 
         public static long CircularInEase(long from, long to, float normalizedTime)
@@ -2193,7 +2190,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (long)(-(to - from) * (Sqrt(1 - t * t) - 1) + from);
+            return (long)(-(to - from) * (Mathf.Sqrt(1 - t * t) - 1) + from);
         }
 
         public static float CircularInEase(float from, float to, float normalizedTime)
@@ -2203,7 +2200,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return -(to - from) * (Sqrt(1 - t * t) - 1) + from;
+            return -(to - from) * (Mathf.Sqrt(1 - t * t) - 1) + from;
         }
 
         public static double CircularInEase(double from, double to, float normalizedTime)
@@ -2213,7 +2210,7 @@ namespace Numba.Tweening
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return -(to - from) * (Sqrt(1 - t * t) - 1) + from;
+            return -(to - from) * (Mathf.Sqrt(1 - t * t) - 1) + from;
         }
 
         public static DateTime CircularInEase(DateTime from, DateTime to, float normalizedTime)
@@ -2266,7 +2263,7 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             --t;
-            return (int)((to - from) * Sqrt(1 - t * t) + from);
+            return (int)((to - from) * Mathf.Sqrt(1 - t * t) + from);
         }
 
         public static long CircularOutEase(long from, long to, float normalizedTime)
@@ -2277,7 +2274,7 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             --t;
-            return (long)((to - from) * Sqrt(1 - t * t) + from);
+            return (long)((to - from) * Mathf.Sqrt(1 - t * t) + from);
         }
 
         public static float CircularOutEase(float from, float to, float normalizedTime)
@@ -2288,7 +2285,7 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             --t;
-            return (to - from) * Sqrt(1 - t * t) + from;
+            return (to - from) * Mathf.Sqrt(1 - t * t) + from;
         }
 
         public static double CircularOutEase(double from, double to, float normalizedTime)
@@ -2299,7 +2296,7 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             --t;
-            return (to - from) * Sqrt(1 - t * t) + from;
+            return (to - from) * Mathf.Sqrt(1 - t * t) + from;
         }
 
         public static DateTime CircularOutEase(DateTime from, DateTime to, float normalizedTime)
@@ -2352,9 +2349,9 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             t /= .5f;
-            if (t < 1) return (int)(-(to - from) / 2 * (Sqrt(1 - t * t) - 1) + from);
+            if (t < 1) return (int)(-(to - from) / 2 * (Mathf.Sqrt(1 - t * t) - 1) + from);
             t -= 2;
-            return (int)((to - from) / 2 * (Sqrt(1 - t * t) + 1) + from);
+            return (int)((to - from) / 2 * (Mathf.Sqrt(1 - t * t) + 1) + from);
         }
 
         public static long CircularInOutEase(long from, long to, float normalizedTime)
@@ -2365,9 +2362,9 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             t /= .5f;
-            if (t < 1) return (long)(-(to - from) / 2 * (Sqrt(1 - t * t) - 1) + from);
+            if (t < 1) return (long)(-(to - from) / 2 * (Mathf.Sqrt(1 - t * t) - 1) + from);
             t -= 2;
-            return (long)((to - from) / 2 * (Sqrt(1 - t * t) + 1) + from);
+            return (long)((to - from) / 2 * (Mathf.Sqrt(1 - t * t) + 1) + from);
         }
 
         public static float CircularInOutEase(float from, float to, float normalizedTime)
@@ -2378,9 +2375,9 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             t /= .5f;
-            if (t < 1) return -(to - from) / 2 * (Sqrt(1 - t * t) - 1) + from;
+            if (t < 1) return -(to - from) / 2 * (Mathf.Sqrt(1 - t * t) - 1) + from;
             t -= 2;
-            return (to - from) / 2 * (Sqrt(1 - t * t) + 1) + from;
+            return (to - from) / 2 * (Mathf.Sqrt(1 - t * t) + 1) + from;
         }
 
         public static double CircularInOutEase(double from, double to, float normalizedTime)
@@ -2391,9 +2388,9 @@ namespace Numba.Tweening
             if (t == 1f) return to;
 
             t /= .5f;
-            if (t < 1) return -(to - from) / 2 * (Sqrt(1 - t * t) - 1) + from;
+            if (t < 1) return -(to - from) / 2 * (Mathf.Sqrt(1 - t * t) - 1) + from;
             t -= 2;
-            return (to - from) / 2 * (Sqrt(1 - t * t) + 1) + from;
+            return (to - from) / 2 * (Mathf.Sqrt(1 - t * t) + 1) + from;
         }
 
         public static DateTime CircularInOutEase(DateTime from, DateTime to, float normalizedTime)

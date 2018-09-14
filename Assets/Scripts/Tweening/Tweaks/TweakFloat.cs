@@ -1,10 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-using static UnityEngine.Debug;
-using Numba.Tweening.Tweaks;
-using Numba.Tweening;
 using System;
 
 namespace Numba.Tweening.Tweaks

@@ -1,20 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-using static UnityEngine.Debug;
-using System;
-using System.Threading;
 using Numba.Tweening.Tweaks;
+using Numba.Tweening.Engine;
 
 namespace Numba.Tweening
 {
     public class Tween
     {
         #region Fields
-        private bool _isPlaying;
-
-        private TaskCompletionSource<object> _taskSource;
+        private Coroutine _playTimeRoutine;
 
         private int _loopsCount = 1;
 
@@ -28,11 +22,11 @@ namespace Numba.Tweening
         #region Constructors
         private Tween() { }
 
-        public Tween(Tweak tweak, float duration) : this(string.Empty, tweak, duration) { }
+        public Tween(Tweak tweak, float duration) : this(null, tweak, duration) { }
 
         public Tween(string name, Tweak tweak, float duration)
         {
-            Name = name;
+            Name = name?? "[Noname]";
             Tweak = tweak;
             Duration = Mathf.Max(0f, duration);
         }
@@ -42,6 +36,8 @@ namespace Numba.Tweening
         public string Name { get; private set; }
 
         public Tweak Tweak { get; private set; }
+
+        public bool IsPlaying { get { return _playTimeRoutine != null; } }
 
         public float Duration { get; private set; }
 
@@ -181,24 +177,19 @@ namespace Numba.Tweening
             return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
         }
 
-        public Task PlayAsync()
+        public Coroutine Play()
         {
-            if (_isPlaying)
+            if (IsPlaying)
             {
-                LogWarning($"Tween with name \"{Name}\" already playing.");
-                return _taskSource.Task;
+                Debug.LogWarning($"Tween with name \"{Name}\" already playing.");
+                return _playTimeRoutine;
             }
 
-            PlayTimeAsync(UsedEaseType, Ease, new AnimationCurve(_curve.keys), LoopsCount, LoopType).CatchErrors();
-
-            return _taskSource.Task;
+            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(UsedEaseType, Ease, new AnimationCurve(_curve.keys), LoopsCount, LoopType));
         }
 
-        private async Task PlayTimeAsync(EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
+        private IEnumerator PlayTime(EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
         {
-            _isPlaying = true;
-            _taskSource = new TaskCompletionSource<object>();
-
             float startTime = Time.time;
 
             bool isInfinityLoops = loopsCount == -1;
@@ -211,12 +202,12 @@ namespace Numba.Tweening
 
             while (isInfinityLoops)
             {
-                await new WaitForUpdate();
+                yield return null;
 
                 if (_stopRequested)
                 {
                     HandleStop();
-                    return;
+                    yield break;
                 }
 
                 float normalizedTime = (Time.time - startTime) / duration;
@@ -231,25 +222,24 @@ namespace Numba.Tweening
 
             while (Time.time < endTime)
             {
-                await new WaitForUpdate();
+                yield return null;
                 SetTime((Mathf.Min(Time.time, endTime) - startTime) / duration, usedEaseType, ease, curve, loopsCount, loopType);
 
                 if (_stopRequested)
                 {
                     HandleStop();
-                    return;
+                    yield break;
                 }
             }
 
-            _isPlaying = false;
-            _taskSource.SetResult(null);
+            _playTimeRoutine = null;
         }
 
         public void Stop()
         {
-            if (!_isPlaying)
+            if (!IsPlaying)
             {
-                LogWarning($"Tween with name \"{Name}\" already stoped.");
+                Debug.LogWarning($"Tween with name \"{Name}\" already stoped.");
                 return;
             }
 
@@ -259,8 +249,7 @@ namespace Numba.Tweening
         private void HandleStop()
         {
             _stopRequested = false;
-            _isPlaying = false;
-            _taskSource.SetResult(null);
+            _playTimeRoutine = null;
         }
         #endregion
     }

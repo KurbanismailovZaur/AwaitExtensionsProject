@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-using static UnityEngine.Debug;
-using static UnityEngine.Mathf;
 using System;
+using Numba.Tweening.Engine;
 
 namespace Numba.Tweening
 {
@@ -65,9 +63,7 @@ namespace Numba.Tweening
 
         private List<CallbackData> _callbacksDatas = new List<CallbackData>();
 
-        private bool _isPlaying;
-
-        private TaskCompletionSource<object> _taskSource;
+        private Coroutine _playTimeRoutine;
 
         private Dictionary<Tween, float> _tweenDurations = new Dictionary<Tween, float>();
 
@@ -117,8 +113,10 @@ namespace Numba.Tweening
         public int LoopsCount
         {
             get { return _loopsCount; }
-            set { _loopsCount = Max(value, -1); }
+            set { _loopsCount = Mathf.Max(value, -1); }
         }
+
+        public bool IsPlaying { get { return _playTimeRoutine != null; } }
         #endregion
 
         #region Methods
@@ -136,13 +134,13 @@ namespace Numba.Tweening
         public void Insert(float time, Tween tween)
         {
             _tweensDatas.Add(new TweenData(tween, time));
-            Duration = Max(Duration, time + CalculateAndCacheDuration(tween));
+            Duration = Mathf.Max(Duration, time + CalculateAndCacheDuration(tween));
         }
 
         public void Insert(float time, Action callback)
         {
             _callbacksDatas.Add(new CallbackData(callback, time));
-            Duration = Max(Duration, time);
+            Duration = Mathf.Max(Duration, time);
         }
 
         private float CalculateAndCacheDuration(Tween tween)
@@ -164,24 +162,19 @@ namespace Numba.Tweening
             return this;
         }
 
-        public Task PlayAsync()
+        public Coroutine Play()
         {
-            if (_isPlaying)
+            if (IsPlaying)
             {
-                LogWarning($"Sequence with name \"{Name}\"is already playing.");
-                return _taskSource.Task;
+                Debug.LogWarning($"Sequence with name \"{Name}\"is already playing.");
+                return _playTimeRoutine;
             }
 
-            PlayTimeAsync(LoopsCount).CatchErrors();
-
-            return _taskSource.Task;
+            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(LoopsCount));
         }
 
-        private async Task PlayTimeAsync(int loopsCount)
+        private IEnumerator PlayTime(int loopsCount)
         {
-            _isPlaying = true;
-            _taskSource = new TaskCompletionSource<object>();
-
             float startTime = 0f;
             float previousTime = 0f;
             float endTime = 0f;
@@ -195,9 +188,9 @@ namespace Numba.Tweening
 
                 while (Time.time < endTime)
                 {
-                    await new WaitForUpdate();
+                    yield return null;
 
-                    timePassed = Min(Time.time, endTime) - startTime;
+                    timePassed = Mathf.Min(Time.time, endTime) - startTime;
                     UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
 
                     previousTime = timePassed;
@@ -205,7 +198,7 @@ namespace Numba.Tweening
                     if (_stopRequested)
                     {
                         HandleStop();
-                        return;
+                        yield break;
                     }
                 }
 
@@ -214,9 +207,8 @@ namespace Numba.Tweening
 
             timePassed = endTime - startTime;
             UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
-
-            _isPlaying = false;
-            _taskSource.SetResult(null);
+            
+            _playTimeRoutine = null;
         }
 
         private void UpdateTweensAndCallbacks(SortedTweensAndCallbacks sortedTweensAndCallbacks, float timePassed)
@@ -271,9 +263,9 @@ namespace Numba.Tweening
 
         public void Stop()
         {
-            if (!_isPlaying)
+            if (!IsPlaying)
             {
-                LogWarning($"Sequence with name \"{Name}\" already stoped.");
+                Debug.LogWarning($"Sequence with name \"{Name}\" already stoped.");
                 return;
             }
 
@@ -283,8 +275,7 @@ namespace Numba.Tweening
         private void HandleStop()
         {
             _stopRequested = false;
-            _isPlaying = false;
-            _taskSource.SetResult(null);
+            _playTimeRoutine = null;
         }
         #endregion
     }
