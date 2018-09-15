@@ -27,11 +27,9 @@ namespace Numba
 
         private Tweak _tweak;
 
-        private IEnumerator Start()
+        private void Start()
         {
-            yield return StartCoroutine(Task.Delay(2000).AsEnumerator());
-            
-            Log("Started");
+            _cube.DoLocalScaleXBy(1f, 1f, Ease.InOutExpo).Play();
         }
 
         private void Update()
