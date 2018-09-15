@@ -11,13 +11,6 @@ namespace Numba.Tweening.Tweaks
 
         public TweakColor(Color from, Color to, Action<Color> setter) : base(from, to, setter) { }
 
-        public override void Increment()
-        {
-            Color change = To - From;
-            From = To;
-            To = To + change;
-        }
-
         protected override Color Evaluate(float normalizedPassedTime, Ease ease) => Easing.Ease(From, To, normalizedPassedTime, ease);
 
         protected override Color EvaluateBackward(float normalizedPassedTime, Ease ease) => Easing.Ease(To, From, normalizedPassedTime, ease);

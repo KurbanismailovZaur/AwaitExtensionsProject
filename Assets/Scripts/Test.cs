@@ -27,9 +27,11 @@ namespace Numba
 
         private Tweak _tweak;
 
-        private void Start()
+        private async void Start()
         {
-            _cube.DoLocalScaleXBy(1f, 1f, Ease.InOutExpo).Play();
+            while (true) await _cube.DoMoveZBy(1f, 1f, Ease.InOutExpo).Play();
+
+            Log("Completed");
         }
 
         private void Update()

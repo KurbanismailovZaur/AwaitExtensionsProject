@@ -11,13 +11,6 @@ namespace Numba.Tweening.Tweaks
 
         public TweakQuaternion(Quaternion from, Quaternion to, Action<Quaternion> setter) : base(from, to, setter) { }
 
-        public override void Increment()
-        {
-            Quaternion oldFrom = From;
-            From = To;
-            To = To * oldFrom;
-        }
-
         protected override Quaternion Evaluate(float normalizedPassedTime, Ease ease) => Easing.Ease(From, To, normalizedPassedTime, ease);
 
         protected override Quaternion EvaluateBackward(float normalizedPassedTime, Ease ease) => Easing.Ease(To, From, normalizedPassedTime, ease);

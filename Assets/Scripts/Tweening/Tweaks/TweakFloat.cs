@@ -11,13 +11,6 @@ namespace Numba.Tweening.Tweaks
 
         public TweakFloat(float from, float to, Action<float> setter) : base(from, to, setter) { }
 
-        public override void Increment()
-        {
-            float change = To - From;
-            From = To;
-            To = To + change;
-        }
-
         protected override float Evaluate(float normalizedPassedTime, Ease ease) => Easing.Ease(From, To, normalizedPassedTime, ease);
 
         protected override float EvaluateBackward(float normalizedPassedTime, Ease ease) => Easing.Ease(To, From, normalizedPassedTime, ease);

@@ -14,8 +14,6 @@ namespace Numba.Tweening.Tweaks
         public abstract void SetTimeBackward(float normalizedTime, Ease ease);
 
         public abstract void SetTimeBackward(float normalizedTime, AnimationCurve curve);
-
-        public abstract void Increment();
     }
 
     public abstract class Tweak<T> : Tweak
