@@ -26,4 +26,13 @@ public static class Extensions
     /// </summary>
     /// <param name="task">Current task.</param>
     public static async void CatchErrors(this Task task) => await task;
+
+    /// <summary>
+    /// Convert task to IEnumerator object.
+    /// </summary>
+    /// <param name="task">Current task.</param>
+    public static IEnumerator AsEnumerator(this Task task)
+    {
+        while (!task.IsCompleted) yield return null;
+    }
 }
