@@ -18,27 +18,11 @@ namespace Numba
         [SerializeField]
         private Transform _cube;
 
-        [SerializeField]
-        private AnimationCurve _curve;
-
-        [SerializeField]
-        [Range(0f, 1f)]
-        private float _time;
-
-        private Tweak _tweak;
-
-        private IEnumerator Start()
+        private void Start()
         {
-            // Convert task to coroutine and then yield it.
-            yield return Task.Delay(1000).AsCoroutine();
-
-            // After task is completed log the message.
-            Log("Task awaited through enumerator.");
-        }
-
-        private void Update()
-        {
-            //_tweak.SetTime(_time, _curve);
+            // Tween.Create(Color.black, Color.white, (c) => _cube.GetComponent<MeshRenderer>().material.color = c, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).Play();
+            // new Tween(Color.black, Color.white, (c) => _cube.GetComponent<MeshRenderer>().material.color = c, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).Play();
+            
         }
     }
 }

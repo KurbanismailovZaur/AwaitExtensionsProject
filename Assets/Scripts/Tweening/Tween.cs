@@ -2,11 +2,92 @@
 using UnityEngine;
 using Numba.Tweening.Tweaks;
 using Numba.Tweening.Engine;
+using System;
 
 namespace Numba.Tweening
 {
     public class Tween
     {
+        #region Create
+        #region Float
+        public static Tween Create(float from, float to, Action<float> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, float from, float to, Action<float> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Double
+        public static Tween Create(double from, double to, Action<double> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, double from, double to, Action<double> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Int
+        public static Tween Create(int from, int to, Action<int> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, int from, int to, Action<int> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Long
+        public static Tween Create(long from, long to, Action<long> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, long from, long to, Action<long> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Vector2
+        public static Tween Create(Vector2 from, Vector2 to, Action<Vector2> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, Vector2 from, Vector2 to, Action<Vector2> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Vector3
+        public static Tween Create(Vector3 from, Vector3 to, Action<Vector3> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, Vector3 from, Vector3 to, Action<Vector3> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Vector4
+        public static Tween Create(Vector4 from, Vector4 to, Action<Vector4> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, Vector4 from, Vector4 to, Action<Vector4> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Quaternion
+        public static Tween Create(Quaternion from, Quaternion to, Action<Quaternion> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, Quaternion from, Quaternion to, Action<Quaternion> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Color
+        public static Tween Create(Color from, Color to, Action<Color> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, Color from, Color to, Action<Color> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Color32
+        public static Tween Create(Color32 from, Color32 to, Action<Color32> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, Color32 from, Color32 to, Action<Color32> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region DateTime
+        public static Tween Create(DateTime from, DateTime to, Action<DateTime> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, DateTime from, DateTime to, Action<DateTime> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Rect
+        public static Tween Create(Rect from, Rect to, Action<Rect> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, Rect from, Rect to, Action<Rect> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Tweak
+        public static Tween Create(Tweak tweak, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, tweak, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, Tweak tweak, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(name, tweak, duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        #endregion
+        #endregion
+
         #region Fields
         private Coroutine _playTimeRoutine;
 

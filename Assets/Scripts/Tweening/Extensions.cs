@@ -64,11 +64,13 @@ namespace Numba.Tweening
 
         private static Tween DoMove(Transform transform, Space space, Vector3 position, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            if (space == Space.World) return new Tween(new TweakVector3(transform.position, position, (p) => transform.position = p), duration).SetEase(ease).SetLoops(loopsCount, loopType);
-            else return new Tween(new TweakVector3(transform.localPosition, position, (p) => transform.localPosition = p), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+            if (space == Space.World)
+                return Tween.Create(transform.position, position, (p) => transform.position = p, duration, ease, loopsCount, loopType);
+            else
+                return Tween.Create(transform.localPosition, position, (p) => transform.localPosition = p, duration, ease, loopsCount, loopType);
         }
 
-        private static Tween DoMoveAxis(Func<float> axisValueGetter, Action<float> axisValueSetter, float position, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(axisValueGetter(), position, axisValueSetter), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        private static Tween DoMoveAxis(Func<float> axisValueGetter, Action<float> axisValueSetter, float position, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(axisValueGetter(), position, axisValueSetter, duration, ease, loopsCount, loopType);
 
         private static void ChangeTransformPosition(Transform transform, Space space, int axis, float value)
         {
@@ -138,49 +140,60 @@ namespace Numba.Tweening
         #endregion
         #endregion
 
-        private static Tween DoRotateAxis(Func<float> angleGetter, float angle, Action<float> angleSetter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(angleGetter(), angle, angleSetter), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        private static Tween DoRotateAxis(Func<float> angleGetter, float angle, Action<float> angleSetter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(angleGetter(), angle, angleSetter, duration, ease, loopsCount, loopType);
 
         private static Tween DoRotate(Transform transform, Space space, Quaternion rotation, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            if (space == Space.World) return new Tween(new TweakQuaternion(transform.rotation, rotation, (q) => transform.rotation = q), duration).SetEase(ease).SetLoops(loopsCount, loopType);
-            else return new Tween(new TweakQuaternion(transform.localRotation, rotation, (q) => transform.localRotation = q), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+            if (space == Space.World)
+                return Tween.Create(transform.rotation, rotation, (q) => transform.rotation = q, duration, ease, loopsCount, loopType);
+            else
+                return Tween.Create(transform.localRotation, rotation, (q) => transform.localRotation = q, duration, ease, loopsCount, loopType);
         }
         #endregion
 
         #region Scale
         #region Local
         #region Absolute
-        public static Tween DoLocalScaleX(this Transform transform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(transform.localScale.x, x, (tweenedX) => transform.localScale = SetVectorValue(transform.localScale, 0, tweenedX)), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        public static Tween DoLocalScaleX(this Transform transform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(transform.localScale.x, x, (tweenedX) => transform.localScale = SetVectorValue(transform.localScale, 0, tweenedX), duration, ease, loopsCount, loopType);
 
-        public static Tween DoLocalScaleY(this Transform transform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(transform.localScale.y, y, (tweenedY) => transform.localScale = SetVectorValue(transform.localScale, 1, tweenedY)), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        public static Tween DoLocalScaleY(this Transform transform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(transform.localScale.y, y, (tweenedY) => transform.localScale = SetVectorValue(transform.localScale, 1, tweenedY), duration, ease, loopsCount, loopType);
 
-        public static Tween DoLocalScaleZ(this Transform transform, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(transform.localScale.z, z, (tweenedZ) => transform.localScale = SetVectorValue(transform.localScale, 2, tweenedZ)), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        public static Tween DoLocalScaleZ(this Transform transform, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(transform.localScale.z, z, (tweenedZ) => transform.localScale = SetVectorValue(transform.localScale, 2, tweenedZ), duration, ease, loopsCount, loopType);
 
         public static Tween DoLocalScale(this Transform transform, float uniformScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => DoLocalScale(transform, new Vector3(uniformScale, uniformScale, uniformScale), duration, ease, loopsCount, loopType);
 
         public static Tween DoLocalScale(this Transform transform, float x, float y, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => DoLocalScale(transform, new Vector3(x, y, z), duration, ease, loopsCount, loopType);
 
-        public static Tween DoLocalScale(this Transform transform, Vector3 scale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return new Tween(new TweakVector3(transform.localScale, scale, (s) => transform.localScale = s), duration).SetEase(ease).SetLoops(loopsCount, loopType);
-        }
+        public static Tween DoLocalScale(this Transform transform, Vector3 scale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => DoScale(transform, scale, duration, ease, loopsCount, loopType);
         #endregion
 
         #region Relative
-        public static Tween DoLocalScaleXBy(this Transform transform, float relativeX, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(transform.localScale.x, transform.localScale.x + relativeX, (tweenedX) => transform.localScale = SetVectorValue(transform.localScale, 0, tweenedX)), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        public static Tween DoLocalScaleXBy(this Transform transform, float relativeX, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(transform.localScale.x, transform.localScale.x + relativeX, (tweenedX) => transform.localScale = SetVectorValue(transform.localScale, 0, tweenedX), duration, ease, loopsCount, loopType);
 
-        public static Tween DoLocalScaleYBy(this Transform transform, float relativeY, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(transform.localScale.y, transform.localScale.y + relativeY, (tweenedY) => transform.localScale = SetVectorValue(transform.localScale, 1, tweenedY)), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        public static Tween DoLocalScaleYBy(this Transform transform, float relativeY, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(transform.localScale.y, transform.localScale.y + relativeY, (tweenedY) => transform.localScale = SetVectorValue(transform.localScale, 1, tweenedY), duration, ease, loopsCount, loopType);
 
-        public static Tween DoLocalScaleZBy(this Transform transform, float relativeZ, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => new Tween(new TweakFloat(transform.localScale.z, transform.localScale.z + relativeZ, (tweenedZ) => transform.localScale = SetVectorValue(transform.localScale, 2, tweenedZ)), duration).SetEase(ease).SetLoops(loopsCount, loopType);
+        public static Tween DoLocalScaleZBy(this Transform transform, float relativeZ, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(transform.localScale.z, transform.localScale.z + relativeZ, (tweenedZ) => transform.localScale = SetVectorValue(transform.localScale, 2, tweenedZ), duration, ease, loopsCount, loopType);
 
         public static Tween DoLocalScaleBy(this Transform transform, float uniformScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => DoLocalScale(transform, transform.localScale + new Vector3(uniformScale, uniformScale, uniformScale), duration, ease, loopsCount, loopType);
 
         public static Tween DoLocalScaleBy(this Transform transform, float relativeX, float relativeY, float relativeZ, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => DoLocalScale(transform, transform.localScale + new Vector3(relativeX, relativeY, relativeZ), duration, ease, loopsCount, loopType);
         
-        public static Tween DoLocalScaleBy(this Transform transform, Vector3 relativeScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => DoLocalScale(transform, transform.localScale + relativeScale, duration, ease, loopsCount, loopType);
+        public static Tween DoLocalScaleBy(this Transform transform, Vector3 relativeScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => DoScale(transform, transform.localScale + relativeScale, duration, ease, loopsCount, loopType);
+        #endregion
+
+        public static Tween DoScale(Transform transform, Vector3 scale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(transform.localScale, scale, (s) => transform.localScale = s, duration, ease, loopsCount, loopType);
+        }
         #endregion
         #endregion
         #endregion
+
+        #region Material
+        //public static Tween DoColor(this Material material, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        //{
+        //    return new Tween
+        //}
         #endregion
 
         private static Vector2 SetVectorValue(Vector2 vector2, int axis, float value)
