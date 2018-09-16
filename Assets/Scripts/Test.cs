@@ -27,11 +27,13 @@ namespace Numba
 
         private Tweak _tweak;
 
-        private async void Start()
+        private IEnumerator Start()
         {
-            while (true) await _cube.DoMoveZBy(1f, 1f, Ease.InOutExpo).Play();
+            // Convert task to coroutine and then yield it.
+            yield return Task.Delay(1000).AsCoroutine();
 
-            Log("Completed");
+            // After task is completed log the message.
+            Log("Task awaited through enumerator.");
         }
 
         private void Update()

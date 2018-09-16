@@ -35,4 +35,10 @@ public static class Extensions
     {
         while (!task.IsCompleted) yield return null;
     }
+
+    /// <summary>
+    /// Convert Task object to Coroutine object.
+    /// </summary>
+    /// <param name="task">Current task.</param>
+    public static Coroutine AsCoroutine(this Task task) => RoutineHelper.Instance.StartCoroutine(task.AsEnumerator());
 }
