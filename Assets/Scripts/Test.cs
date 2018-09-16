@@ -20,9 +20,9 @@ namespace Numba
 
         private void Start()
         {
-            // Tween.Create(Color.black, Color.white, (c) => _cube.GetComponent<MeshRenderer>().material.color = c, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).Play();
-            // new Tween(Color.black, Color.white, (c) => _cube.GetComponent<MeshRenderer>().material.color = c, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).Play();
-            
+            _cube.DoPositionX(1f, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).Play();
+            _cube.DoEulerAnglesZ(-90f, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).Play();
+            _cube.DoLocalScaleX(2f, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).Play();
         }
     }
 }
