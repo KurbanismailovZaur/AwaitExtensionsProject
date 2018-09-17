@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 namespace Numba.Tweening.Tweaks
 {
@@ -31,6 +32,10 @@ namespace Numba.Tweening.Tweaks
         public static Tweak Create(DateTime from, DateTime to, Action<DateTime> setter) => new TweakDateTime(from, to, setter);
 
         public static Tweak Create(Rect from, Rect to, Action<Rect> setter) => new TweakRect(from, to, setter);
+
+        public static Tweak Create(Bounds from, Bounds to, Action<Bounds> setter) => new TweakBounds(from, to, setter);
+
+        public static Tweak Create(ColorBlock from, ColorBlock to, Action<ColorBlock> setter) => new TweakColorBlock(from, to, setter);
         #endregion
 
         public abstract void SetTime(float normalizedTime, Ease ease);

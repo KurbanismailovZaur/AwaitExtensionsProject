@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Numba.Tweening.Engine;
+using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
@@ -162,7 +163,7 @@ namespace Numba.Tweening
             return this;
         }
 
-        public Coroutine Play()
+        public Coroutine Play(bool useRealtime = false)
         {
             if (IsPlaying)
             {
@@ -170,10 +171,10 @@ namespace Numba.Tweening
                 return _playTimeRoutine;
             }
 
-            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(LoopsCount));
+            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, LoopsCount));
         }
 
-        private IEnumerator PlayTime(int loopsCount)
+        private IEnumerator PlayTime(bool useRealtime, int loopsCount)
         {
             float startTime = 0f;
             float previousTime = 0f;
@@ -182,15 +183,15 @@ namespace Numba.Tweening
 
             while (loopsCount != 0)
             {
-                startTime = Time.time;
+                startTime = GetTime(useRealtime);
                 endTime = startTime + Duration;
                 previousTime = -1f;
 
-                while (Time.time < endTime)
+                while (GetTime(useRealtime) < endTime)
                 {
                     yield return null;
 
-                    timePassed = Mathf.Min(Time.time, endTime) - startTime;
+                    timePassed = Mathf.Min(GetTime(useRealtime), endTime) - startTime;
                     UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
 
                     previousTime = timePassed;
@@ -210,6 +211,8 @@ namespace Numba.Tweening
             
             _playTimeRoutine = null;
         }
+
+        private float GetTime(bool useRealtime) => useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
 
         private void UpdateTweensAndCallbacks(SortedTweensAndCallbacks sortedTweensAndCallbacks, float timePassed)
         {

@@ -3,6 +3,8 @@ using UnityEngine;
 using Numba.Tweening.Tweaks;
 using Numba.Tweening.Engine;
 using System;
+using UnityEngine.UI;
+using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
@@ -81,6 +83,18 @@ namespace Numba.Tweening
         public static Tween Create(string name, Rect from, Rect to, Action<Rect> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
         #endregion
 
+        #region Bounds
+        public static Tween Create(Bounds from, Bounds to, Action<Bounds> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, Bounds from, Bounds to, Action<Bounds> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region ColorBlock
+        public static Tween Create(ColorBlock from, ColorBlock to, Action<ColorBlock> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+
+        public static Tween Create(string name, ColorBlock from, ColorBlock to, Action<ColorBlock> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(name, Tweak.Create(from, to, setter), duration, ease, loopsCount, loopType);
+        #endregion
+
         #region Tweak
         public static Tween Create(Tweak tweak, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Create(null, tweak, duration, ease, loopsCount, loopType);
 
@@ -110,6 +124,11 @@ namespace Numba.Tweening
             Name = name?? "[Noname]";
             Tweak = tweak;
             Duration = Mathf.Max(0f, duration);
+        }
+
+        static Tween()
+        {
+            Time = new Engine.Time();
         }
         #endregion
 
@@ -151,6 +170,8 @@ namespace Numba.Tweening
         }
 
         public LoopType LoopType { get; set; }
+
+        public static Engine.Time Time { get; private set; }
         #endregion
 
         #region Methods
@@ -258,7 +279,7 @@ namespace Numba.Tweening
             return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
         }
 
-        public Coroutine Play()
+        public Coroutine Play(bool useRealtime = false)
         {
             if (IsPlaying)
             {
@@ -266,12 +287,12 @@ namespace Numba.Tweening
                 return _playTimeRoutine;
             }
 
-            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(UsedEaseType, Ease, new AnimationCurve(_curve.keys), LoopsCount, LoopType));
+            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, UsedEaseType, Ease, new AnimationCurve(_curve.keys), LoopsCount, LoopType));
         }
 
-        private IEnumerator PlayTime(EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
+        private IEnumerator PlayTime(bool useRealtime, EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
         {
-            float startTime = Time.time;
+            float startTime = GetTime(useRealtime);
 
             bool isInfinityLoops = loopsCount == -1;
             if (isInfinityLoops) loopsCount = 1;
@@ -291,20 +312,20 @@ namespace Numba.Tweening
                     yield break;
                 }
 
-                float normalizedTime = (Time.time - startTime) / duration;
+                float normalizedTime = (GetTime(useRealtime) - startTime) / duration;
                 SetTime(normalizedTime, usedEaseType, ease, curve, loopsCount, loopType);
 
-                while (endTime < Time.time)
+                while (endTime < GetTime(useRealtime))
                 {
                     startTime = endTime;
                     endTime = startTime + duration;
                 }
             }
 
-            while (Time.time < endTime)
+            while (GetTime(useRealtime) < endTime)
             {
                 yield return null;
-                SetTime((Mathf.Min(Time.time, endTime) - startTime) / duration, usedEaseType, ease, curve, loopsCount, loopType);
+                SetTime((Mathf.Min(GetTime(useRealtime), endTime) - startTime) / duration, usedEaseType, ease, curve, loopsCount, loopType);
 
                 if (_stopRequested)
                 {
@@ -315,6 +336,8 @@ namespace Numba.Tweening
 
             _playTimeRoutine = null;
         }
+
+        private float GetTime(bool useRealtime) => useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
 
         public void Stop()
         {

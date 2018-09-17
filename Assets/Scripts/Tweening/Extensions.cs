@@ -191,10 +191,37 @@ namespace Numba.Tweening
         #endregion
 
         #region Material
-        //public static Tween DoColor(this Material material, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        //{
-        //    return new Tween
-        //}
+        public static Tween DoColor(this Material material, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(material.color, color, (c) => material.color = c, duration, ease, loopsCount, loopType);
+
+        public static Tween DoColor(this Material material, string name, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(material.GetColor(name), color, (c) => material.SetColor(name, c), duration, ease, loopsCount, loopType);
+
+        public static Tween DoMainTextureOffset(this Material material, Vector2 textureOffset, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(material.mainTextureOffset, textureOffset, (to) => material.mainTextureOffset = to, duration, ease, loopsCount, loopType);
+
+        public static Tween DoMainTextureScale(this Material material, Vector2 textureScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(material.mainTextureScale, textureScale, (ts) => material.mainTextureScale = ts, duration, ease, loopsCount, loopType);
+
+        public static Tween DoTextureOffset(this Material material, string name, Vector2 textureOffset, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(material.GetTextureOffset(name), textureOffset, (to) => material.SetTextureOffset(name, to), duration, ease, loopsCount, loopType);
+
+        public static Tween DoTextureScale(this Material material, string name, Vector2 textureScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(material.GetTextureOffset(name), textureScale, (ts) => material.SetTextureScale(name, ts), duration, ease, loopsCount, loopType);
+
+        public static Tween DoInt(this Material material, string name, int value, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(material.GetInt(name), value, (i) => material.SetInt(name, i), duration, ease, loopsCount, loopType);
+
+        public static Tween DoFloat(this Material material, string name, float value, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(material.GetFloat(name), value, (f) => material.SetFloat(name, f), duration, ease, loopsCount, loopType);
+
+        public static Tween DoVector(this Material material, string name, Vector4 vector, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(material.GetVector(name), vector, (v) => material.SetVector(name, v), duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region AudioSource
+        public static Tween DoVolume(this AudioSource audioSource, float volume, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(audioSource.volume, volume, (v) => audioSource.volume = v, duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region Camera
+        public static Tween DoFieldOfView(this Camera camera, float fieldOfView, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(camera.fieldOfView, fieldOfView, (fov) => camera.fieldOfView = fov, duration, ease, loopsCount, loopType);
+
+        public static Tween DoRect(this Camera camera, Rect rect, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(camera.rect, rect, (r) => camera.rect = r, duration, ease, loopsCount, loopType);
+        #endregion
+
+        #region CanvasGroup
+        public static Tween DoAlpha(this CanvasGroup canvasGroup, float alpha, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward) => Tween.Create(canvasGroup.alpha, alpha, (a) => canvasGroup.alpha = a, duration, ease, loopsCount, loopType);
         #endregion
 
         private static Vector2 SetVectorValue(Vector2 vector2, int axis, float value)
