@@ -7,7 +7,7 @@ namespace Redcode.Awaiting
     /// This class can be awaited.
     /// Run code after awaiting in update cycle from main thread.
     /// </summary>
-    public class WaitForMainThread
+    public class WaitForUpdate
     {
         /// <summary>
         /// Gets awaiter object.
