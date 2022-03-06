@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Threading.Tasks;
-using static UnityEngine.Debug;
+﻿using System;
 using System.Runtime.CompilerServices;
-using System;
 
-namespace Numba.Awaiting.Engine
+namespace Redcode.Awaiting.Engine
 {
     /// <summary>
     /// This class can be awaited.
@@ -31,7 +26,7 @@ namespace Numba.Awaiting.Engine
         /// Continuation will be stored and will be used later (when you give command).
         /// </summary>
         /// <param name="continuation">Continuation method which will be stored.</param>
-        public void OnCompleted(Action continuation) { _continuation = continuation; }
+        public void OnCompleted(Action continuation) => _continuation = continuation;
 
         /// <summary>
         /// Indicates whether await can expect the result (ManualAwaiter not support result after awaiting).
@@ -41,7 +36,7 @@ namespace Numba.Awaiting.Engine
         /// <summary>
         /// Run your continuation in the calling thread.
         /// </summary>
-        public void RunContinuation() { _continuation(); }
+        public void RunContinuation() => _continuation();
     }
 
     /// <summary>
@@ -66,9 +61,6 @@ namespace Numba.Awaiting.Engine
         /// The getter method will be used later when GetResult method will be called.
         /// </summary>
         /// <param name="resultGetter">Method which return result.</param>
-        public void SetResultGetter(Func<T> resultGetter)
-        {
-            _resultGetter = resultGetter;
-        }
+        public void SetResultGetter(Func<T> resultGetter) => _resultGetter = resultGetter;
     }
 }

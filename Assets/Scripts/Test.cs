@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
 
-namespace Numba
+namespace Redcode
 {
     public class Test : MonoBehaviour
     {
