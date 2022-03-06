@@ -1,0 +1,9 @@
+- AwaitBackgroundThread scene show how to switch your code between main and background thread.
+- AwaitEnumeratir scene show how to await while IEnumerator object complete its execution.
+- AwairRepeatPrintExample scene show how to create and run async method without Unity API.
+- AwaitRotateObjectExample scene show how to create and run async method with Unity API.
+- AwaitSceneLoad scene show how to await asynchronous scene loading.
+- AwaitSeconds scene show how to await some seconds.
+- AwaitWebRequest scene show how to send request and await its result.
+
+For other questions please read main documentation on github or in package.
