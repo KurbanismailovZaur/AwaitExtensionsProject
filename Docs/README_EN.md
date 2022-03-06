@@ -1,8 +1,6 @@
 # AwaitExtensions
 AwaitExtensions is a library for the Unity game engine that allows you to apply async/await patter to multiple Unity classes.
 
-<p align="center"><img src="https://user-images.githubusercontent.com/5365111/155132272-fb152646-182f-499f-a64e-ab0195eb458b.png" width="500"><p/>
-
 # What is `async`/`await`?
 Async/`await` is a syntactic sugar that simplifies working with asynchronous code. When you need to wait for a `Task` object (or an object implementing `GetAwaiter`) to complete execution, you simply write the `await` keyword before it, and all code following that instruction will run after the task completes. The method containing the `await` keyword must be marked as `async`.
 
