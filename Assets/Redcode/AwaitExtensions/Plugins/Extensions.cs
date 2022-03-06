@@ -32,13 +32,6 @@ namespace Redcode.Awaiting
         /// <returns><see cref="ManualAwaiter"/> object, which knows how to await <see cref="IEnumerator"/>.</returns>
         public static ManualAwaiter GetAwaiter(this IEnumerator enumerator) => ExtensionsHelper.GetAwaiterForEnumerator(enumerator);
 
-        /// <summary>
-        /// Gets <see cref="ManualAwaiter{UnityWebRequestAsyncOperation}"/> object for <see cref="UnityWebRequestAsyncOperation"/>.
-        /// </summary>
-        /// <param name="www">Target www object.</param>
-        /// <returns><see cref="ManualAwaiter"/> object, which knows how to await <see cref="UnityWebRequestAsyncOperation"/>.</returns>
-        public static ManualAwaiter<UnityWebRequestAsyncOperation> GetAwaiter(this UnityWebRequestAsyncOperation www) => ExtensionsHelper.GetAwaiterWithResultForInstuction(www);
-
         public static ManualAwaiter<AssetBundleRequest> GetAwaiter(this AssetBundleRequest request) => ExtensionsHelper.GetAwaiterWithResultForInstuction(request);
 
         /// <summary>
