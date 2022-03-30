@@ -10,7 +10,7 @@ For details on how to use `async`/`await`, visit the Microsoft Web site.
 Unity and `async`/`await`
 Unity officially supports C# 5.0 and .NET 4.5 starting in 2018. This means you can use these instructions without any problems. The example below demonstrates how you can wait 1 second of real time in the Awake method using `async`/`await`:
 
-```
+```c#
 private async void Awake()
 {
   await Task.Delay(1000);
@@ -22,7 +22,7 @@ The `Log("Awaited")` method will be called from the main thread after waiting 10
 
 You can use almost all features of C# in Unity, but by default Unity does not support waiting for its own types (WaitForSeconds and others), for example this code will not work:
 
-```
+```c#
 private async void Awake()
 {
   await new WaitForSeconds(1f); // error, await does not understand how to expect WaitForSeconds object.
@@ -37,7 +37,7 @@ All time-dependent operations (WaitForFixedUpdate, WaitUntil, wait for coroutine
 # What exactly does Await Extensions do?
 It extends many Unity classes to work with the `await` keyword. Take a look at the example below, it shows all the uses of the `await` instruction with the Await Extensions asset:
 
-```
+```c#
 private async void Awake()
 {
   // wait for the task.
@@ -75,7 +75,7 @@ Behind the scenes Await Extension uses the Unity coroutine engine to wait. This 
 # Threads.
 What if you want some part of the method to run in the background thread and the rest in the main thread? You can do this with two special classes: `WaitForBackgroundThread` and `WaitForUpdate`. You just have to wait for one of these objects so that the code that follows starts executing in the corresponding thread. Look at the code below:
 
-```
+```c#
 private async void Awake()
 {
   Debug.Log( ``Hello from the main thread!)
@@ -110,7 +110,7 @@ The code after waiting `WaitForUpdate` runs in main thread after Update loop (ca
 # Asynchronous methods and exceptions
 In an asynchronous method, exceptions are caught by the task in which they occurred. This means that if you call an asynchronous method from a synchronous method - you have to manually wait for it (in which case the main thread will be blocked for the waiting time), otherwise the exceptions will remain unhandled. Look at the code below:
 
-```
+```c#
 private void Awake()
 {
   // In this case, an exception raised inside the task will be caught by the task itself (the `CreateTask` method creates and returns).
@@ -128,7 +128,7 @@ Here, in the first case we create a task and forget about it (exceptions will no
 
 However, there is another way to catch exceptions which is to use `async void` method which is called from synchronous method and calls asynchronous method with waiting. In this case, the exception will be re-generated in `UnitySynchronizationContext` in its `Update` method, which is called from the main Unity thread, which means that Unity will catch this exception, or you can catch it manually using the `try/catch` instruction. Look at the code below:
 
-```
+```c#
 // CreateTaskAndCatchErrors is called from the main thread.
 private async void Awake() => CreateTaskAndCatchErrors();
 
@@ -141,7 +141,7 @@ private Task CreateTask() => Task.Run(() => throw new Exception());
 
 Now exceptions will be caught by Unity. But we always need to create an extra `async void` method, which is not good. Fortunately, you don't need to create an `async void`, just use the `CatchErrors` extension method for an object of type `Task` that replay the error in the main thread if it occurs.
 
-```
+```c#
 // CreateTaskAndCatchErrors is called from the main thread. Exceptions will be caught by the CatchErrors extension method.
 Private async void Awake() => CreateTaskAndCatchErrors().CatchErrors();
 
@@ -154,7 +154,7 @@ Remember: never leave exceptions unprocessed unless you want a big headache in t
 # Conversion between `IEnumerator`, `Task` and `Coroutine`
 You can convert any `Task` object to an `IEnumerator` object. This is useful for backward compatibility reasons. Simply call the `AsEnumerator` extension method for the task. The `IEnumerator` object will be enumerated until the task is complete. Example:
 
-```
+```c#
 private IEnumerator Start()
 {
   // Convert Task to IEnumerator.
@@ -170,7 +170,7 @@ private IEnumerator Start()
 
 The example above could be made more compact:
 
-```
+```c#
 private IEnumerator Start()
 {
   // Convert Task to IEnumerator and wait for it to finish using Unity coroutine engine.
@@ -182,7 +182,7 @@ private IEnumerator Start()
 
 This example can also be made even shorter by using the `AsCoroutine` method, which converts the task to a coroutine:
 
-```
+```c#
 private IEnumerator Start()
 {
   // Convert Task to IEnumerator and wait for it to finish using Unity's coroutine engine.
