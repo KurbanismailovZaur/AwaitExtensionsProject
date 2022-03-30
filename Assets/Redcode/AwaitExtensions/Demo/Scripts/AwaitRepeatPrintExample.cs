@@ -12,15 +12,15 @@ namespace Redcode.Awaiting.Demo
     {
         private async void Start()
         {
-            await PrintMessage(1f, 3, "Hello Await Extensions!");
+            await PrintMessage(1000, 3, "Hello Await Extensions!");
             print("Awaiting completed.");
         }
 
-        private async Task PrintMessage(float delay, int count, string message)
+        private async Task PrintMessage(int milliseconds, int count, string message)
         {
             while (count-- != 0)
             {
-                await Task.Delay(1000);
+                await Task.Delay(milliseconds);
                 print(message);
             }
         }
