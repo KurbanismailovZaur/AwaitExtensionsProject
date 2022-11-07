@@ -1,0 +1,3 @@
+[submodule "Assets/Modules/Submodules/AwaitExtensions"]
+	path = Assets/Modules/Submodules/AwaitExtensions
+	url = git@github.com:KurbanismailovZaur/AwaitExtensions.git
